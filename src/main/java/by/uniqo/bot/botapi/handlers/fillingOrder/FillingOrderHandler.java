@@ -1,0 +1,244 @@
+package by.uniqo.bot.botapi.handlers.fillingOrder;
+
+import by.uniqo.bot.botapi.handlers.BotState;
+import by.uniqo.bot.botapi.handlers.InputMessageHandler;
+import by.uniqo.bot.cache.UserDataCache;
+import by.uniqo.bot.service.ReplyMessagesService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Формирует анкету пользователя.
+ */
+
+@Slf4j
+@Component
+public class FillingOrderHandler implements InputMessageHandler {
+    private UserDataCache userDataCache;
+    private ReplyMessagesService messagesService;
+
+    public FillingOrderHandler(UserDataCache userDataCache,
+                               ReplyMessagesService messagesService) {
+        this.userDataCache = userDataCache;
+        this.messagesService = messagesService;
+    }
+
+    @Override
+    public SendMessage handle(Message message) {
+        if (userDataCache.getUsersCurrentBotState(message.getFrom().getId()).equals(BotState.FILLING_ORDER)) {
+            userDataCache.setUsersCurrentBotState(message.getFrom().getId(), BotState.ASK_TOTALNUMBER);
+        }
+        return processUsersInput(message);
+    }
+
+    @Override
+    public BotState getHandlerName() {
+        return BotState.FILLING_ORDER;
+    }
+
+    private SendMessage processUsersInput(Message inputMsg) {
+        String usersAnswer = inputMsg.getText();
+        int userId = inputMsg.getFrom().getId();
+        long chatId = inputMsg.getChatId();
+
+        UserProfileData profileData = userDataCache.getUserProfileData(userId);
+        BotState botState = userDataCache.getUsersCurrentBotState(userId);
+
+        SendMessage replyToUser = null;
+
+        if (botState.equals(BotState.ASK_TOTALNUMBER)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askTotalNumber");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TAPESCOLOR);
+        }
+
+        if (botState.equals(BotState.ASK_TAPESCOLOR)) {
+            profileData.setTotalNumber(Integer.parseInt(usersAnswer));
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askTapesColor");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_MODELNUMBER);
+        }
+
+        if (botState.equals(BotState.ASK_MODELNUMBER)) {
+            profileData.setTapesColor(Integer.parseInt(usersAnswer));
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askModelNumber");
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_COLOROFMODELTEXT)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askColorOfModelText");
+            profileData.setModelNumber(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
+        }
+
+        if (botState.equals(BotState.ASK_SYMBOLNUMBER)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askSymbolNumber");
+            profileData.setColorOfModelText(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+        }
+
+        if (botState.equals(BotState.ASK_NUMBEROFMEN)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfMen");
+            profileData.setSymbolNumber(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
+        }
+
+        if (botState.equals(BotState.ASK_NUMBEROFWOMEN)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfWomen");
+            profileData.setNumberOfMen(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
+        }
+
+        if (botState.equals(BotState.ASK_NUMBEROFTEACHERS)) {
+            profileData.setNumberOfWomen(Integer.parseInt(usersAnswer));
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfTeacher");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCHOOLNUMBER);
+        }
+
+        if (botState.equals(BotState.ASK_SCHOOLNUMBER)) {
+            profileData.setNumberOfTeacher(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askSchoolNumber");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+        }
+
+        if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
+            profileData.setSchoolNumber(usersAnswer);
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_LITTLEBELL)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBell");
+            profileData.setAdditionalService(usersAnswer);
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_LITTLEBELLCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBellColor");
+            profileData.setLittleBell(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIGBELL);
+        }
+
+        if (botState.equals(BotState.ASK_BIGBELL)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBell");
+            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_BIGBELLCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBellColor");
+            profileData.setBigBell(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_STARS);
+        }
+
+        if (botState.equals(BotState.ASK_STARS)) {
+            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askStars");
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_SCROLL)) {
+            profileData.setStars(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScroll");
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_SCROLLCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScrollColor");
+            profileData.setScroll(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_RIBBON);
+        }
+
+        if (botState.equals(BotState.ASK_RIBBON)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbon");
+            profileData.setScrollColor(Integer.parseInt(usersAnswer));
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_RIBBONCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbonColor");
+            profileData.setRibbon(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BOWTIE);
+        }
+
+        if (botState.equals(BotState.ASK_BOWTIE)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtie");
+            profileData.setRibbonColor(Integer.parseInt(usersAnswer));
+            replyToUser.setReplyMarkup(getButtonsMarkup());
+        }
+
+        if (botState.equals(BotState.ASK_BOWTIECOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtieColor");
+            profileData.setBowtie(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CREDENTIALS);
+        }
+
+        if (botState.equals(BotState.ASK_CREDENTIALS)) {
+            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askCredentials");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_PHONENUMBER);
+        }
+
+        if (botState.equals(BotState.ASK_PHONENUMBER)) {
+            profileData.setCredentials(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askPhoneNumber");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_URLVK);
+        }
+
+        if (botState.equals(BotState.ASK_URLVK)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUrlVK");
+            profileData.setPhoneNumber(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_DELIVERYADDRESS);
+        }
+
+        if (botState.equals(BotState.ASK_DELIVERYADDRESS)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askDeliveryAddress");
+            profileData.setUrlVK(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COMMENTSTOORDER);
+        }
+
+        if (botState.equals(BotState.ASK_COMMENTSTOORDER)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askCommentsToOrder");
+            profileData.setDeliveryAddress(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ORDER_FILLED);
+        }
+
+        if (botState.equals(BotState.ORDER_FILLED)) {
+            profileData.setCommentsToOrder(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.OrderFilled");
+        }
+
+        userDataCache.saveUserProfileData(userId, profileData);
+
+        return replyToUser;
+    }
+
+    private InlineKeyboardMarkup getButtonsMarkup() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        InlineKeyboardButton buttonYes = new InlineKeyboardButton().setText("Да");
+        InlineKeyboardButton buttonNo = new InlineKeyboardButton().setText("Нет");
+
+        //Every button must have callBackData, or else not work !
+        buttonYes.setCallbackData("buttonYes");
+        buttonNo.setCallbackData("buttonNo");
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(buttonYes);
+        keyboardButtonsRow1.add(buttonNo);
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+
+        inlineKeyboardMarkup.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup;
+    }
+
+
+}
