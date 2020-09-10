@@ -39,7 +39,7 @@ public class StartOrderHandler implements InputMessageHandler {
     private SendMessage processUsersInput(Message inputMsg) {
         long chatId = inputMsg.getChatId();
 
-        SendMessage replyToUser = messagesService.getReplyMessage(chatId, "reply.askDestiny");
+        SendMessage replyToUser = messagesService.getReplyMessage(chatId, "reply.askStart");
         replyToUser.setReplyMarkup(getInlineMessageButtons());
 
         return replyToUser;

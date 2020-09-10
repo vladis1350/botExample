@@ -1,11 +1,13 @@
 package by.uniqo.bot;
 
 import by.uniqo.bot.botapi.handlers.TelegramFacade;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+@Component
 public class Bot extends TelegramWebhookBot {
     private String webHookPath;
     private String botUserName;
@@ -13,8 +15,8 @@ public class Bot extends TelegramWebhookBot {
 
     private TelegramFacade telegramFacade;
 
-    public Bot(DefaultBotOptions botOptions, TelegramFacade telegramFacade) {
-        super(botOptions);
+    public Bot(TelegramFacade telegramFacade) {
+
         this.telegramFacade = telegramFacade;
     }
 
