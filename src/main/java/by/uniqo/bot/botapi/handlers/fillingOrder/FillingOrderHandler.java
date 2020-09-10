@@ -67,13 +67,14 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_MODELNUMBER)) {
             profileData.setTapesColor(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askModelNumber");
-            replyToUser.setReplyMarkup(getButtonsMarkup());
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOROFMODELTEXT);
+
         }
 
         if (botState.equals(BotState.ASK_COLOROFMODELTEXT)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askColorOfModelText");
             profileData.setModelNumber(Integer.parseInt(usersAnswer));
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
+            replyToUser.setReplyMarkup(getButtonsMarkup2());
         }
 
         if (botState.equals(BotState.ASK_SYMBOLNUMBER)) {
@@ -109,7 +110,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
             profileData.setSchoolNumber(usersAnswer);
-            replyToUser.setReplyMarkup(getButtonsMarkup());
+            replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
 
         if (botState.equals(BotState.ASK_LITTLEBELL)) {
@@ -238,6 +239,78 @@ public class FillingOrderHandler implements InputMessageHandler {
         inlineKeyboardMarkup.setKeyboard(rowList);
 
         return inlineKeyboardMarkup;
+    }
+    private InlineKeyboardMarkup getInlineMessageButtons() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+
+        InlineKeyboardButton buttonStars = new InlineKeyboardButton().setText("Стразы");
+        InlineKeyboardButton buttonScroll = new InlineKeyboardButton().setText("Приветственный свиток");
+        InlineKeyboardButton buttonBigBell = new InlineKeyboardButton().setText("Большой колокольчик");
+        InlineKeyboardButton buttonSmallBell = new InlineKeyboardButton().setText("Маленький колокольчик");
+        InlineKeyboardButton buttonRibbon = new InlineKeyboardButton().setText("Бант");
+        InlineKeyboardButton buttonBowtie = new InlineKeyboardButton().setText("Бабочка");
+
+        //Every button must have callBackData, or else not work !
+        buttonStars.setCallbackData("buttonStars");
+        buttonScroll.setCallbackData("buttonScroll");
+        buttonBigBell.setCallbackData("buttonBigBell");
+        buttonSmallBell.setCallbackData("buttonSmallBell");
+        buttonRibbon.setCallbackData("buttonRibbon");
+        buttonBowtie.setCallbackData("buttonBowtie");
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(buttonStars);
+        keyboardButtonsRow1.add(buttonScroll);
+
+        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
+        keyboardButtonsRow2.add(buttonBigBell);
+        keyboardButtonsRow2.add(buttonSmallBell);
+
+        List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
+        keyboardButtonsRow2.add(buttonRibbon);
+        keyboardButtonsRow2.add(buttonBowtie);
+
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+        rowList.add(keyboardButtonsRow2);
+        rowList.add(keyboardButtonsRow3);
+
+        inlineKeyboardMarkup.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup;
+    }
+
+    private InlineKeyboardMarkup getButtonsMarkup2() {
+        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+        InlineKeyboardButton buttonOne = new InlineKeyboardButton().setText("1");
+        InlineKeyboardButton button2 = new InlineKeyboardButton().setText("2");
+        InlineKeyboardButton button3 = new InlineKeyboardButton().setText("3");
+        InlineKeyboardButton button4 = new InlineKeyboardButton().setText("4");
+        InlineKeyboardButton button5 = new InlineKeyboardButton().setText("5");
+
+
+        //Every button must have callBackData, or else not work !
+        buttonOne.setCallbackData("buttonOne");
+        button2.setCallbackData("button2");
+        button3.setCallbackData("button3");
+        button4.setCallbackData("button4");
+        button5.setCallbackData("button5");
+
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(buttonOne);
+        keyboardButtonsRow1.add(button2);
+        keyboardButtonsRow1.add(button3);
+        keyboardButtonsRow1.add(button4);
+        keyboardButtonsRow1.add(button5);
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+
+        inlineKeyboardMarkup2.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup2;
     }
 
 

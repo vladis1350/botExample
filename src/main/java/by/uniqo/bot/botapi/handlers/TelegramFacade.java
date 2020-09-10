@@ -89,7 +89,7 @@ public class TelegramFacade {
 
         //From Destiny choose buttons
         if (buttonQuery.getData().equals("buttonYes")) {
-            callBackAnswer = new SendMessage(chatId, "Укажите общее количество лент");
+            callBackAnswer = new SendMessage(chatId, "Укажите общее количество лент вместе с классным руководителем");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TOTALNUMBER);
         } else if (buttonQuery.getData().equals("buttonNo")) {
             callBackAnswer = sendAnswerCallbackQuery("Возвращайся, когда будешь готов", false, buttonQuery);

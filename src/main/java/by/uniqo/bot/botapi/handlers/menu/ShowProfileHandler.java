@@ -25,13 +25,7 @@ public class ShowProfileHandler implements InputMessageHandler {
         final UserProfileData profileData = userDataCache.getUserProfileData(userId);
 
         userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
-        return new SendMessage(message.getChatId(), String.format("%s%n -------------------%nОбщее количество лент" +
-                        " %s%nЦвет ленты: %d%nНомер макета: %s%nЦвет надписи: %d%n" + "%s%nНомер символа: %s%nКоличество парней: %s%n" +
-                        "%s%nКоличество девушек: %s%nКлассные руководители(ль)%s%nНазвание учебного заведения: "  +
-                        "%s%nЦвет маленького колокольчика %s%nЦвет большого колокольчика%s%n" +
-                        "Пригласительный свиток: %s%nЦвет пригласительного свитка %s%nЦвет банта:" +
-                        " %s%nЦвет бабочки: %s%nФИО заказчика: %s%nНомер телефона: %s%nСсылка на профиль в ВК %s%n" +
-                        "Адрес доставки: %s%nКомментарии к заказу: %s%n",
+        return new SendMessage(message.getChatId(), String.format(
                 "Данные по вашему заказу", profileData.getTotalNumber(), profileData.getTapesColor(), profileData.getModelNumber(),
                 profileData.getColorOfModelText(), profileData.getSymbolNumber(), profileData.getNumberOfMen(), profileData.getNumberOfWomen(),
                 profileData.getNumberOfTeacher(), profileData.getSchoolNumber(), profileData.getLittleBellColor(),
