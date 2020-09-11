@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
- * @author Sergei Viacheslaev
+ * @author get inspired by Sergei Viacheslaev's video
  */
 @Component
 @Slf4j
@@ -103,7 +103,8 @@ public class TelegramFacade {
             userProfileData.setStars("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-            callBackAnswer = new SendMessage(chatId, "Что-нибудь ещё?");
+            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);
+
         } else if (buttonQuery.getData().equals("buttonScroll")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setScroll("Да");
