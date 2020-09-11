@@ -105,13 +105,15 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_SCHOOLNUMBER)) {
             profileData.setNumberOfTeacher(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askSchoolNumber");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
             profileData.setSchoolNumber(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+
         }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
+
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
-//            profileData.setSchoolNumber(usersAnswer);
+            profileData.setSchoolNumber(usersAnswer);
             replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
 
@@ -187,13 +189,8 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_CREDENTIALS)) {
-//            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askCredentials");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_PHONENUMBER);
-        }
-
-        if (botState.equals(BotState.ASK_PHONENUMBER)) {
             profileData.setCredentials(usersAnswer);
+//            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askPhoneNumber");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_URLVK);
         }
