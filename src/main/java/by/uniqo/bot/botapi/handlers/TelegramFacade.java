@@ -95,10 +95,8 @@ public class TelegramFacade {
             callBackAnswer = sendAnswerCallbackQuery("Возвращайся, когда будешь готов", false, buttonQuery);
         } else if (buttonQuery.getData().equals("buttonIwillThink")) {
             callBackAnswer = sendAnswerCallbackQuery("Данная кнопка не поддерживается", true, buttonQuery);
-        }
-
-        //From menus in additional services
-        else if (buttonQuery.getData().equals("buttonStars")) {
+            //From menus in additional services
+        }  else if (buttonQuery.getData().equals("buttonStars")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setStars("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);

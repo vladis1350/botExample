@@ -106,14 +106,12 @@ public class FillingOrderHandler implements InputMessageHandler {
             profileData.setNumberOfTeacher(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askSchoolNumber");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-
         }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
-
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
             replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
@@ -203,8 +201,8 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_DELIVERYADDRESS)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askDeliveryAddress");
             profileData.setUrlVK(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askDeliveryAddress");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COMMENTSTOORDER);
         }
 
@@ -225,26 +223,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         return replyToUser;
     }
 
-    private InlineKeyboardMarkup getButtonsMarkup() {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        InlineKeyboardButton buttonYes = new InlineKeyboardButton().setText("Да");
-        InlineKeyboardButton buttonNo = new InlineKeyboardButton().setText("Нет");
-
-        //Every button must have callBackData, or else not work !
-        buttonYes.setCallbackData("buttonYes");
-        buttonNo.setCallbackData("buttonNo");
-
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        keyboardButtonsRow1.add(buttonYes);
-        keyboardButtonsRow1.add(buttonNo);
-
-        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-        rowList.add(keyboardButtonsRow1);
-
-        inlineKeyboardMarkup.setKeyboard(rowList);
-
-        return inlineKeyboardMarkup;
-    }
+    
     private InlineKeyboardMarkup getInlineMessageButtons() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
