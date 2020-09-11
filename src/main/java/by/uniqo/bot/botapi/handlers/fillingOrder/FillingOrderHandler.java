@@ -113,6 +113,7 @@ public class FillingOrderHandler implements InputMessageHandler {
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
+            
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
             replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
@@ -123,12 +124,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-        if (botState.equals(BotState.ASK_LITTLEBELLCOLOR)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBellColor");
-//            profileData.setLittleBell(usersAnswer);
-            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-        }
+//        if (botState.equals(BotState.ASK_LITTLEBELLCOLOR)) {
+//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBellColor");
+////            profileData.setLittleBell(usersAnswer);
+//            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//        }
 //
 //        if (botState.equals(BotState.ASK_BIGBELL)) {
 //            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBell");
@@ -136,12 +137,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-        if (botState.equals(BotState.ASK_BIGBELLCOLOR)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBellColor");
-//            profileData.setBigBell(usersAnswer);
-            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-        }
+//        if (botState.equals(BotState.ASK_BIGBELLCOLOR)) {
+//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBellColor");
+////            profileData.setBigBell(usersAnswer);
+//            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//        }
 //
 //        if (botState.equals(BotState.ASK_STARS)) {
 //            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
@@ -155,12 +156,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-        if (botState.equals(BotState.ASK_SCROLLCOLOR)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScrollColor");
-//            profileData.setScroll(usersAnswer);
-            profileData.setScrollColor(Integer.parseInt(usersAnswer));
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-        }
+//        if (botState.equals(BotState.ASK_SCROLLCOLOR)) {
+//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScrollColor");
+////            profileData.setScroll(usersAnswer);
+//            profileData.setScrollColor(Integer.parseInt(usersAnswer));
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//        }
 //
 //        if (botState.equals(BotState.ASK_RIBBON)) {
 //            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbon");
@@ -168,12 +169,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-        if (botState.equals(BotState.ASK_RIBBONCOLOR)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbonColor");
-//            profileData.setRibbon(usersAnswer);
-            profileData.setRibbonColor(Integer.parseInt(usersAnswer));
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-        }
+//        if (botState.equals(BotState.ASK_RIBBONCOLOR)) {
+//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbonColor");
+////            profileData.setRibbon(usersAnswer);
+//            profileData.setRibbonColor(Integer.parseInt(usersAnswer));
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//        }
 //
 //        if (botState.equals(BotState.ASK_BOWTIE)) {
 //            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtie");
@@ -181,12 +182,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-        if (botState.equals(BotState.ASK_BOWTIECOLOR)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtieColor");
-//            profileData.setBowtie(usersAnswer);
-            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-        }
+//        if (botState.equals(BotState.ASK_BOWTIECOLOR)) {
+//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtieColor");
+////            profileData.setBowtie(usersAnswer);
+//            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//        }
 
         if (botState.equals(BotState.ASK_CREDENTIALS)) {
             profileData.setCredentials(usersAnswer);

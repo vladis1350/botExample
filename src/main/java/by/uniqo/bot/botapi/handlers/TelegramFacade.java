@@ -110,6 +110,7 @@ public class TelegramFacade {
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCROLLCOLOR);
             callBackAnswer = new SendMessage(chatId, "Вы выбрали свиток");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonBigBell")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
@@ -117,6 +118,7 @@ public class TelegramFacade {
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIGBELLCOLOR);
             callBackAnswer = new SendMessage(chatId, "Вы выбрали большой колокольчик");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonLittleBell")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
@@ -124,6 +126,7 @@ public class TelegramFacade {
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_LITTLEBELLCOLOR);
             callBackAnswer = new SendMessage(chatId, "Вы выбрали маленький колокольчик");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonRibbon")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
@@ -131,6 +134,7 @@ public class TelegramFacade {
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_RIBBONCOLOR);
             callBackAnswer = new SendMessage(chatId, "Вы выбрали бант");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonBowtie")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
@@ -138,6 +142,7 @@ public class TelegramFacade {
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BOWTIECOLOR);
             callBackAnswer = new SendMessage(chatId, "Вы выбрали бабочку");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonNext")) {
 //            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
