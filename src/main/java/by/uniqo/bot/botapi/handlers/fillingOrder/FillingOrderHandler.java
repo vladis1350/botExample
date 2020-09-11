@@ -247,17 +247,19 @@ public class FillingOrderHandler implements InputMessageHandler {
         InlineKeyboardButton buttonStars = new InlineKeyboardButton().setText("Стразы");
         InlineKeyboardButton buttonScroll = new InlineKeyboardButton().setText("Приветственный свиток");
         InlineKeyboardButton buttonBigBell = new InlineKeyboardButton().setText("Большой колокольчик");
-        InlineKeyboardButton buttonSmallBell = new InlineKeyboardButton().setText("Маленький колокольчик");
+        InlineKeyboardButton buttonLittleBell = new InlineKeyboardButton().setText("Маленький колокольчик");
         InlineKeyboardButton buttonRibbon = new InlineKeyboardButton().setText("Бант");
         InlineKeyboardButton buttonBowtie = new InlineKeyboardButton().setText("Бабочка");
+        InlineKeyboardButton buttonNext = new InlineKeyboardButton().setText("Нет");
 
         //Every button must have callBackData, or else not work !
         buttonStars.setCallbackData("buttonStars");
         buttonScroll.setCallbackData("buttonScroll");
         buttonBigBell.setCallbackData("buttonBigBell");
-        buttonSmallBell.setCallbackData("buttonSmallBell");
+        buttonLittleBell.setCallbackData("buttonLittleBell");
         buttonRibbon.setCallbackData("buttonRibbon");
         buttonBowtie.setCallbackData("buttonBowtie");
+        buttonNext.setCallbackData("buttonNext");
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
         keyboardButtonsRow1.add(buttonStars);
@@ -265,17 +267,21 @@ public class FillingOrderHandler implements InputMessageHandler {
 
         List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
         keyboardButtonsRow2.add(buttonBigBell);
-        keyboardButtonsRow2.add(buttonSmallBell);
+        keyboardButtonsRow2.add(buttonLittleBell);
 
         List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
         keyboardButtonsRow3.add(buttonRibbon);
         keyboardButtonsRow3.add(buttonBowtie);
+
+        List<InlineKeyboardButton> keyboardButtonsRow4 = new ArrayList<>();
+        keyboardButtonsRow4.add(buttonNext);
 
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(keyboardButtonsRow1);
         rowList.add(keyboardButtonsRow2);
         rowList.add(keyboardButtonsRow3);
+        rowList.add(keyboardButtonsRow4);
 
         inlineKeyboardMarkup.setKeyboard(rowList);
 

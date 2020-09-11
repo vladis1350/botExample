@@ -97,21 +97,53 @@ public class TelegramFacade {
             callBackAnswer = sendAnswerCallbackQuery("Данная кнопка не поддерживается", true, buttonQuery);
         }
 
-//        //From menus in additional services
-//        else if (buttonQuery.getData().equals("buttonMan")) {
+        //From menus in additional services
+        else if (buttonQuery.getData().equals("buttonStars")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setStars("Да");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            callBackAnswer = new SendMessage(chatId, "Что-нибудь ещё?");
+        } else if (buttonQuery.getData().equals("buttonScroll")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setScroll("Yes");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCROLLCOLOR);
+            callBackAnswer = new SendMessage(chatId, "color");
+
+        } else if (buttonQuery.getData().equals("buttonBigBell")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setBigBell("yes");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIGBELLCOLOR);
+            callBackAnswer = new SendMessage(chatId, "color");
+        } else if (buttonQuery.getData().equals("buttonLittleBell")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setLittleBell("Yes");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_LITTLEBELLCOLOR);
+            callBackAnswer = new SendMessage(chatId, "color");
+
+        } else if (buttonQuery.getData().equals("buttonRibbon")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setRibbon("yes");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_RIBBONCOLOR);
+            callBackAnswer = new SendMessage(chatId, "color");
+        } else if (buttonQuery.getData().equals("buttonBowtie")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setBowtie("Yes");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BOWTIECOLOR);
+            callBackAnswer = new SendMessage(chatId, "color");
+
+        } else if (buttonQuery.getData().equals("buttonNext")) {
 //            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-//            userProfileData.setGender("М");
+//            userProfileData.setButtonBowtie("Yes");
 //            userDataCache.saveUserProfileData(userId, userProfileData);
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
-//            callBackAnswer = new SendMessage(chatId, "Твоя любимая цифра");
-//        } else if (buttonQuery.getData().equals("buttonWoman")) {
-//            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-//            userProfileData.setGender("Ж");
-//            userDataCache.saveUserProfileData(userId, userProfileData);
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
-//            callBackAnswer = new SendMessage(chatId, "Твоя любимая цифра");
-//
-//        }
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CREDENTIALS);
+            callBackAnswer = new SendMessage(chatId, "");
+        }
 
 
 
