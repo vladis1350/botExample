@@ -122,12 +122,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-//        if (botState.equals(BotState.ASK_LITTLEBELLCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBellColor");
-////            profileData.setLittleBell(usersAnswer);
-//            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
+        if (botState.equals(BotState.ASK_LITTLEBELLCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBellColor");
+//            profileData.setLittleBell(usersAnswer);
+            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+        }
 //
 //        if (botState.equals(BotState.ASK_BIGBELL)) {
 //            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBell");
@@ -135,12 +135,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-//        if (botState.equals(BotState.ASK_BIGBELLCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBellColor");
-////            profileData.setBigBell(usersAnswer);
-//            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
+        if (botState.equals(BotState.ASK_BIGBELLCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBellColor");
+//            profileData.setBigBell(usersAnswer);
+            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+        }
 //
 //        if (botState.equals(BotState.ASK_STARS)) {
 //            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
@@ -154,12 +154,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-//        if (botState.equals(BotState.ASK_SCROLLCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScrollColor");
-////            profileData.setScroll(usersAnswer);
-//            profileData.setScrollColor(Integer.parseInt(usersAnswer));
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
+        if (botState.equals(BotState.ASK_SCROLLCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScrollColor");
+//            profileData.setScroll(usersAnswer);
+            profileData.setScrollColor(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+        }
 //
 //        if (botState.equals(BotState.ASK_RIBBON)) {
 //            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbon");
@@ -167,12 +167,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-//        if (botState.equals(BotState.ASK_RIBBONCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbonColor");
-////            profileData.setRibbon(usersAnswer);
-//            profileData.setRibbonColor(Integer.parseInt(usersAnswer));
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
+        if (botState.equals(BotState.ASK_RIBBONCOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbonColor");
+//            profileData.setRibbon(usersAnswer);
+            profileData.setRibbonColor(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+        }
 //
 //        if (botState.equals(BotState.ASK_BOWTIE)) {
 //            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtie");
@@ -180,12 +180,12 @@ public class FillingOrderHandler implements InputMessageHandler {
 //            replyToUser.setReplyMarkup(getButtonsMarkup());
 //        }
 //
-//        if (botState.equals(BotState.ASK_BOWTIECOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtieColor");
-////            profileData.setBowtie(usersAnswer);
-//            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
+        if (botState.equals(BotState.ASK_BOWTIECOLOR)) {
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtieColor");
+//            profileData.setBowtie(usersAnswer);
+            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+        }
 
         if (botState.equals(BotState.ASK_CREDENTIALS)) {
             profileData.setCredentials(usersAnswer);
@@ -223,7 +223,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         return replyToUser;
     }
 
-    
+
     private InlineKeyboardMarkup getInlineMessageButtons() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
@@ -273,11 +273,11 @@ public class FillingOrderHandler implements InputMessageHandler {
 
     private InlineKeyboardMarkup getButtonsMarkup2() {
         InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
-        InlineKeyboardButton buttonOne = new InlineKeyboardButton().setText("1");
-        InlineKeyboardButton button2 = new InlineKeyboardButton().setText("2");
-        InlineKeyboardButton button3 = new InlineKeyboardButton().setText("3");
-        InlineKeyboardButton button4 = new InlineKeyboardButton().setText("4");
-        InlineKeyboardButton button5 = new InlineKeyboardButton().setText("5");
+        InlineKeyboardButton buttonOne = new InlineKeyboardButton().setText("Золотая фольга");
+        InlineKeyboardButton button2 = new InlineKeyboardButton().setText("Серебрянная фольга");
+        InlineKeyboardButton button3 = new InlineKeyboardButton().setText("Красная фольга");
+        InlineKeyboardButton button4 = new InlineKeyboardButton().setText("Синяя фольга");
+        InlineKeyboardButton button5 = new InlineKeyboardButton().setText("Черный матовый");
 
 
         //Every button must have callBackData, or else not work !
@@ -290,13 +290,26 @@ public class FillingOrderHandler implements InputMessageHandler {
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
         keyboardButtonsRow1.add(buttonOne);
-        keyboardButtonsRow1.add(button2);
-        keyboardButtonsRow1.add(button3);
-        keyboardButtonsRow1.add(button4);
-        keyboardButtonsRow1.add(button5);
+
+        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
+        keyboardButtonsRow2.add(button2);
+
+        List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
+        keyboardButtonsRow3.add(button3);
+
+        List<InlineKeyboardButton> keyboardButtonsRow4 = new ArrayList<>();
+        keyboardButtonsRow4.add(button4);
+
+        List<InlineKeyboardButton> keyboardButtonsRow5 = new ArrayList<>();
+        keyboardButtonsRow5.add(button5);
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(keyboardButtonsRow1);
+        rowList.add(keyboardButtonsRow2);
+        rowList.add(keyboardButtonsRow3);
+        rowList.add(keyboardButtonsRow4);
+        rowList.add(keyboardButtonsRow5);
+
 
         inlineKeyboardMarkup2.setKeyboard(rowList);
 
