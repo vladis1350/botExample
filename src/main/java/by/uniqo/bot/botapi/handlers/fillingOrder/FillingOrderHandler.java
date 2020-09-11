@@ -105,15 +105,15 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_SCHOOLNUMBER)) {
             profileData.setNumberOfTeacher(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askSchoolNumber");
-            profileData.setSchoolNumber(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
-
+            if (profileData.getSchoolNumber()==null) {
+                profileData.setSchoolNumber(usersAnswer);
+            }
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
-            profileData.setSchoolNumber(usersAnswer);
             replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
 
