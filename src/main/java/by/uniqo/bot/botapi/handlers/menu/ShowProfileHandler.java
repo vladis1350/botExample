@@ -25,16 +25,19 @@ public class ShowProfileHandler implements InputMessageHandler {
         final UserProfileData profileData = userDataCache.getUserProfileData(userId);
 
         userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
-        return new SendMessage(message.getChatId(), String.format( "%sсумма лент %sцвет лент %sномер макета %sцвет текста макета" +
-                        " %sномер символа %sкол-во парней %sкол-во девушек %sкол-во преподавателей %sномер школы %sцвет колокола" +
-                        " %sцвет большого колокола %sцвет свитка %sцвет банта %sцвет бабочки %sФИО %sтелефонный номер %sссылка в вк" +
-                        " %sадрес доставки %sкоменты %s",
+        return new SendMessage(message.getChatId(), String.format( "%s%nОбщая сумма лент %s%nЦвет лент %s%nНомер макета %s%nЦвет текста макета" +
+                        " %s%nНомер символа на ленте %s%nКол-во парней %s%nКол-во девушек %s%nКол-во преподавателей %s%nНомер школы %s%nСтразы " +
+                        "%s%nМаленький колокольчик %s%nЦвет маленького колокольчика %s%nБольшой колокольчик" +
+                        " %s%nЦвет большого колокола %s%nПригласительный свиток %s%nЦвет свитка %s%nБант %s%nЦвет банта %s%nБабочка " +
+                        "%s%nЦвет бабочки %s%nФИО %s%nТелефонный номер %s%nСсылка в вк" +
+                        " %s%nАдрес доставки %s%nКомментарии к заказу %s",
                 "Данные по вашему заказу", profileData.getTotalNumber(), profileData.getTapesColor(), profileData.getModelNumber(),
                 profileData.getColorOfModelText(), profileData.getSymbolNumber(), profileData.getNumberOfMen(), profileData.getNumberOfWomen(),
-                profileData.getNumberOfTeacher(), profileData.getSchoolNumber(), profileData.getLittleBellColor(),
-                profileData.getBigBellColor(), profileData.getScrollColor(), profileData.getRibbonColor(), profileData.getBowtieColor(),
-                profileData.getCredentials(), profileData.getPhoneNumber(), profileData.getUrlVK(), profileData.getDeliveryAddress(),
-                profileData.getCommentsToOrder()));
+                profileData.getNumberOfTeacher(), profileData.getSchoolNumber(),profileData.getStars(),profileData.getLittleBell(),
+                profileData.getLittleBellColor(), profileData.getBigBell(), profileData.getBigBellColor(), profileData.getScroll(),
+                profileData.getScrollColor(), profileData.getRibbon(), profileData.getRibbonColor(), profileData.getBowtie(),
+                profileData.getBowtieColor(), profileData.getCredentials(), profileData.getPhoneNumber(), profileData.getUrlVK(),
+                profileData.getDeliveryAddress(), profileData.getCommentsToOrder()));
     }
 
     @Override

@@ -113,7 +113,7 @@ public class FillingOrderHandler implements InputMessageHandler {
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
-            
+
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
             replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
