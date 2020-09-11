@@ -97,6 +97,24 @@ public class TelegramFacade {
             callBackAnswer = sendAnswerCallbackQuery("Данная кнопка не поддерживается", true, buttonQuery);
         }
 
+//        //From menus in additional services
+//        else if (buttonQuery.getData().equals("buttonMan")) {
+//            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+//            userProfileData.setGender("М");
+//            userDataCache.saveUserProfileData(userId, userProfileData);
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
+//            callBackAnswer = new SendMessage(chatId, "Твоя любимая цифра");
+//        } else if (buttonQuery.getData().equals("buttonWoman")) {
+//            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+//            userProfileData.setGender("Ж");
+//            userDataCache.saveUserProfileData(userId, userProfileData);
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
+//            callBackAnswer = new SendMessage(chatId, "Твоя любимая цифра");
+//
+//        }
+
+
+
         //From ModelColorText choose buttons
         else if (buttonQuery.getData().equals("buttonOne")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);

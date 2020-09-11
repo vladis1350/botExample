@@ -268,8 +268,8 @@ public class FillingOrderHandler implements InputMessageHandler {
         keyboardButtonsRow2.add(buttonSmallBell);
 
         List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
-        keyboardButtonsRow2.add(buttonRibbon);
-        keyboardButtonsRow2.add(buttonBowtie);
+        keyboardButtonsRow3.add(buttonRibbon);
+        keyboardButtonsRow3.add(buttonBowtie);
 
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
