@@ -75,6 +75,7 @@ public class FillingOrderHandler implements InputMessageHandler {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askColorOfModelText");
             profileData.setModelNumber(Integer.parseInt(usersAnswer));
             replyToUser.setReplyMarkup(getButtonsMarkup2());
+
         }
 
         if (botState.equals(BotState.ASK_SYMBOLNUMBER)) {

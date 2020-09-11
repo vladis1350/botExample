@@ -103,34 +103,34 @@ public class TelegramFacade {
             userProfileData.setColorOfModelText(1);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
-            callBackAnswer = new SendMessage(chatId, "Укажите номер макета");
+            callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
         } else if (buttonQuery.getData().equals("button2")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(2);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
-            callBackAnswer = new SendMessage(chatId, "Укажите номер макета");
+            callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button3")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(3);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
-            callBackAnswer = new SendMessage(chatId, "Укажите номер макета");
+            callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button4")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(4);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
-            callBackAnswer = new SendMessage(chatId, "Укажите номер макета");
+            callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button5")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(5);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
-            callBackAnswer = new SendMessage(chatId, "Укажите номер макета");
+            callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else {
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
