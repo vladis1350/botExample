@@ -90,46 +90,46 @@ public class TelegramFacade {
         //From Destiny choose buttons
         if (buttonQuery.getData().equals("buttonYes")) {
             callBackAnswer = new SendMessage(chatId, "Укажите общее количество лент вместе с классным руководителем");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TOTALNUMBER);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TAPESCOLOR);
         } else if (buttonQuery.getData().equals("buttonNo")) {
             callBackAnswer = sendAnswerCallbackQuery("Возвращайся, когда будешь готов", false, buttonQuery);
         } else if (buttonQuery.getData().equals("buttonIwillThink")) {
             callBackAnswer = sendAnswerCallbackQuery("Данная кнопка не поддерживается", true, buttonQuery);
         }
 
-        //From Gender choose buttons
+        //From ModelColorText choose buttons
         else if (buttonQuery.getData().equals("buttonOne")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(1);
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
         } else if (buttonQuery.getData().equals("button2")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(2);
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button3")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(3);
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button4")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(4);
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button5")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(5);
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SYMBOLNUMBER);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else {
