@@ -112,6 +112,13 @@ public class FillingOrderHandler implements InputMessageHandler {
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
+//            if (profileData.getLittleBell().equals("Да")) {
+//                profileData.setLittleBellColor(Integer.parseInt(usersAnswer));;
+//            }
+//            if (profileData.getLittleBell().equals("Да")) {
+//                profileData.setBigBellColor(Integer.parseInt(usersAnswer));
+//            }
+
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
             replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
@@ -125,7 +132,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_LITTLEBELLCOLOR)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBellColor");
 //            profileData.setLittleBell(usersAnswer);
-            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
+//            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
         }
 //

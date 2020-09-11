@@ -108,16 +108,16 @@ public class TelegramFacade {
             userProfileData.setScroll("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCROLLCOLOR);
-            callBackAnswer = new SendMessage(chatId, "Выберите цвет пригласительного свитка");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//            callBackAnswer = new SendMessage(chatId, "Выберите цвет пригласительного свитка");
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonBigBell")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setBigBell("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIGBELLCOLOR);
-            callBackAnswer = new SendMessage(chatId, "Выверите цвет большого колокольчика");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//            callBackAnswer = new SendMessage(chatId, "Выверите цвет большого колокольчика");
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonLittleBell")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
@@ -144,9 +144,6 @@ public class TelegramFacade {
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonNext")) {
-//            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-//            userProfileData.setButtonBowtie("Yes");
-//            userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CREDENTIALS);
             callBackAnswer = new SendMessage(chatId, "Укажите свою ФИО");
         }
