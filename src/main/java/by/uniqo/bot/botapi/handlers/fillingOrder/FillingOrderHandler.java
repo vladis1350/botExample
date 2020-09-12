@@ -1,10 +1,12 @@
 package by.uniqo.bot.botapi.handlers.fillingOrder;
 
+import by.uniqo.bot.Bot;
 import by.uniqo.bot.botapi.handlers.BotState;
 import by.uniqo.bot.botapi.handlers.InputMessageHandler;
 import by.uniqo.bot.cache.UserDataCache;
 import by.uniqo.bot.service.ReplyMessagesService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -23,11 +25,13 @@ import java.util.List;
 public class FillingOrderHandler implements InputMessageHandler {
     private UserDataCache userDataCache;
     private ReplyMessagesService messagesService;
+    private Bot myBot;
 
     public FillingOrderHandler(UserDataCache userDataCache,
-                               ReplyMessagesService messagesService) {
+                               ReplyMessagesService messagesService, @Lazy Bot myBot) {
         this.userDataCache = userDataCache;
         this.messagesService = messagesService;
+        this.myBot = myBot;
     }
 
     @Override
@@ -59,12 +63,14 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_TAPESCOLOR)) {
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-catalogColor.jpg");
             profileData.setTotalNumber(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askTapesColor");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_MODELNUMBER);
         }
 
         if (botState.equals(BotState.ASK_MODELNUMBER)) {
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-model.jpg");
             profileData.setTapesColor(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askModelNumber");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOROFMODELTEXT);
@@ -109,6 +115,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-additionalOrder.jpg");
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }

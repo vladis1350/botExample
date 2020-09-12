@@ -73,10 +73,10 @@ public class TelegramFacade {
         switch (inputMsg) {
             case "/start":
                 botState = BotState.ASK_START;
-                myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-catalog 2021.jpg");
                 break;
             case "Сделать заказ":
                 botState = BotState.FILLING_ORDER;
+//                myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-catalogColor.jpg");
                 break;
             case "Мой заказ":
                 myBot.sendDocument(chatId, "Ваша анкета", getUsersProfile(userId));
@@ -108,7 +108,7 @@ public class TelegramFacade {
         //From Destiny choose buttons
         if (buttonQuery.getData().equals("buttonYes")) {
             callBackAnswer = new SendMessage(chatId, "Укажите общее количество лент вместе с классным руководителем");
-//            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-catalog 2021.jpg");
+
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TAPESCOLOR);
         } else if (buttonQuery.getData().equals("buttonNo")) {
             callBackAnswer = sendAnswerCallbackQuery("Возвращайся, когда будешь готов", false, buttonQuery);
@@ -181,12 +181,14 @@ public class TelegramFacade {
             userProfileData.setColorOfModelText(1);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-symbol.jpg");
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
         } else if (buttonQuery.getData().equals("button2")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(2);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-symbol.jpg");
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button3")) {
@@ -194,6 +196,7 @@ public class TelegramFacade {
             userProfileData.setColorOfModelText(3);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-symbol.jpg");
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button4")) {
@@ -201,6 +204,7 @@ public class TelegramFacade {
             userProfileData.setColorOfModelText(4);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-symbol.jpg");
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else if (buttonQuery.getData().equals("button5")) {
@@ -208,6 +212,7 @@ public class TelegramFacade {
             userProfileData.setColorOfModelText(5);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-symbol.jpg");
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else {
