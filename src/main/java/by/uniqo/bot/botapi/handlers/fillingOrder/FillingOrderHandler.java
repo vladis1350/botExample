@@ -68,14 +68,14 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_TAPESCOLOR)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-catalogColor.jpg");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-catalogColor.JPG");
             profileData.setTotalNumber(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askTapesColor");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_MODELNUMBER);
         }
 
         if (botState.equals(BotState.ASK_MODELNUMBER)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-model.jpg");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-model.JPG");
             profileData.setTapesColor(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askModelNumber");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOROFMODELTEXT);
@@ -120,7 +120,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-additionalOrder.jpg");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-additionalOrder.JPG");
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
