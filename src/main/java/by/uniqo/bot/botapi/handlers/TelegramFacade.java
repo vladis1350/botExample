@@ -84,6 +84,7 @@ public class TelegramFacade {
     private BotApiMethod<?> processCallbackQuery(CallbackQuery buttonQuery) {
         final long chatId = buttonQuery.getMessage().getChatId();
         final int userId = buttonQuery.getFrom().getId();
+
         BotApiMethod<?> callBackAnswer = mainMenuService.getMainMenuMessage(chatId, "Воспользуйтесь главным меню");
 
 
@@ -107,7 +108,8 @@ public class TelegramFacade {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setScroll("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCROLLCOLOR);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);
 //            callBackAnswer = new SendMessage(chatId, "Выберите цвет пригласительного свитка");
 //            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
@@ -115,7 +117,9 @@ public class TelegramFacade {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setBigBell("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIGBELLCOLOR);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);
+
 //            callBackAnswer = new SendMessage(chatId, "Выверите цвет большого колокольчика");
 //            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
@@ -123,25 +127,28 @@ public class TelegramFacade {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setLittleBell("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_LITTLEBELLCOLOR);
-            callBackAnswer = new SendMessage(chatId, "Выберите цвет маленького колокольчика");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);
+//            callBackAnswer = new SendMessage(chatId, "Выберите цвет маленького колокольчика");
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonRibbon")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setRibbon("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_RIBBONCOLOR);
-            callBackAnswer = new SendMessage(chatId, "Выберите цвет банта");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);
+//            callBackAnswer = new SendMessage(chatId, "Выберите цвет банта");
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonBowtie")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setBowtie("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BOWTIECOLOR);
-            callBackAnswer = new SendMessage(chatId, "Выберите цвет бабочки");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);;
+//            callBackAnswer = new SendMessage(chatId, "Выберите цвет бабочки");
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
 
         } else if (buttonQuery.getData().equals("buttonNext")) {
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CREDENTIALS);

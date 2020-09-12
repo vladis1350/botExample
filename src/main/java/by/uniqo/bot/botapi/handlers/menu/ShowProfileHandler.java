@@ -27,16 +27,16 @@ public class ShowProfileHandler implements InputMessageHandler {
         userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
         return new SendMessage(message.getChatId(), String.format( "%s%nОбщая сумма лент %s%nЦвет лент %s%nНомер макета %s%nЦвет текста макета" +
                         " %s%nНомер символа на ленте %s%nКол-во парней %s%nКол-во девушек %s%nКол-во преподавателей %s%nНомер школы %s%nСтразы " +
-                        "%s%nМаленький колокольчик %s%nЦвет маленького колокольчика %s%nБольшой колокольчик" +
-                        " %s%nЦвет большого колокола %s%nПригласительный свиток %s%nЦвет свитка %s%nБант %s%nЦвет банта %s%nБабочка " +
-                        "%s%nЦвет бабочки %s%nФИО %s%nТелефонный номер %s%nСсылка в вк" +
+                        "%s%nМаленький колокольчик  %s%nБольшой колокольчик" +
+                        "  %s%nПригласительный свиток  %s%nБант  %s%nБабочка " +
+                        " %s%nФИО %s%nТелефонный номер %s%nСсылка в вк" +
                         " %s%nАдрес доставки %s%nКомментарии к заказу %s",
                 "Данные по вашему заказу", profileData.getTotalNumber(), profileData.getTapesColor(), profileData.getModelNumber(),
                 profileData.getColorOfModelText(), profileData.getSymbolNumber(), profileData.getNumberOfMen(), profileData.getNumberOfWomen(),
                 profileData.getNumberOfTeacher(), profileData.getSchoolNumber(),profileData.getStars(),profileData.getLittleBell(),
-                profileData.getLittleBellColor(), profileData.getBigBell(), profileData.getBigBellColor(), profileData.getScroll(),
-                profileData.getScrollColor(), profileData.getRibbon(), profileData.getRibbonColor(), profileData.getBowtie(),
-                profileData.getBowtieColor(), profileData.getCredentials(), profileData.getPhoneNumber(), profileData.getUrlVK(),
+                profileData.getBigBell(), profileData.getScroll(),
+                profileData.getRibbon(), profileData.getBowtie(),
+                profileData.getCredentials(), profileData.getPhoneNumber(), profileData.getUrlVK(),
                 profileData.getDeliveryAddress(), profileData.getCommentsToOrder()));
     }
 
