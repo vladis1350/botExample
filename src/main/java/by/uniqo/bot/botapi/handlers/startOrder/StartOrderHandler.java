@@ -1,9 +1,11 @@
 package by.uniqo.bot.botapi.handlers.startOrder;
 
+import by.uniqo.bot.Bot;
 import by.uniqo.bot.botapi.handlers.BotState;
 import by.uniqo.bot.botapi.handlers.InputMessageHandler;
 import by.uniqo.bot.service.ReplyMessagesService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;

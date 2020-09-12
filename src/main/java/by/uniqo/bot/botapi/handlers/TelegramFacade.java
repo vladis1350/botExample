@@ -1,16 +1,25 @@
 package by.uniqo.bot.botapi.handlers;
 
+import by.uniqo.bot.Bot;
 import by.uniqo.bot.botapi.handlers.fillingOrder.UserProfileData;
 import by.uniqo.bot.cache.UserDataCache;
 import by.uniqo.bot.service.MainMenuService;
+import by.uniqo.bot.service.ReplyMessagesService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 /**
  * @author get inspired by Sergei Viacheslaev's video
@@ -21,11 +30,16 @@ public class TelegramFacade {
     private BotStateContext botStateContext;
     private UserDataCache userDataCache;
     private MainMenuService mainMenuService;
+    private Bot myBot;
+    private ReplyMessagesService messagesService;
 
-    public TelegramFacade(BotStateContext botStateContext, UserDataCache userDataCache, MainMenuService mainMenuService) {
+    public TelegramFacade(BotStateContext botStateContext, UserDataCache userDataCache, MainMenuService mainMenuService,
+                          @Lazy Bot myBot, ReplyMessagesService messagesService) {
         this.botStateContext = botStateContext;
         this.userDataCache = userDataCache;
         this.mainMenuService = mainMenuService;
+        this.myBot = myBot;
+        this.messagesService = messagesService;
     }
 
     public BotApiMethod<?> handleUpdate(Update update) {
@@ -52,17 +66,20 @@ public class TelegramFacade {
     private SendMessage handleInputMessage(Message message) {
         String inputMsg = message.getText();
         int userId = message.getFrom().getId();
+        long chatId = message.getChatId();
         BotState botState;
         SendMessage replyMessage;
 
         switch (inputMsg) {
             case "/start":
                 botState = BotState.ASK_START;
+                myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-catalog 2021.jpg");
                 break;
             case "Сделать заказ":
                 botState = BotState.FILLING_ORDER;
                 break;
             case "Мой заказ":
+                myBot.sendDocument(chatId, "Ваша анкета", getUsersProfile(userId));
                 botState = BotState.SHOW_USER_ORDER;
                 break;
             case "Помощь":
@@ -91,6 +108,7 @@ public class TelegramFacade {
         //From Destiny choose buttons
         if (buttonQuery.getData().equals("buttonYes")) {
             callBackAnswer = new SendMessage(chatId, "Укажите общее количество лент вместе с классным руководителем");
+//            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-catalog 2021.jpg");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TAPESCOLOR);
         } else if (buttonQuery.getData().equals("buttonNo")) {
             callBackAnswer = sendAnswerCallbackQuery("Возвращайся, когда будешь готов", false, buttonQuery);
@@ -211,5 +229,19 @@ public class TelegramFacade {
         return answerCallbackQuery;
     }
 
+    @SneakyThrows
+    public File getUsersProfile(int userId) {
+        UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+        File profileFile = ResourceUtils.getFile("classpath:static/docs/users_profile.txt");
+
+        try (FileWriter fw = new FileWriter(profileFile.getAbsoluteFile());
+             BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(userProfileData.toString());
+        }
+
+
+        return profileFile;
+
+    }
 
 }
