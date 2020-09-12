@@ -77,7 +77,6 @@ public class TelegramFacade {
                 break;
             case "Сделать заказ":
                 botState = BotState.FILLING_ORDER;
-//                myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-catalogColor.jpg");
                 break;
             case "Мой заказ":
                 myBot.sendDocument(chatId, "Ваша анкета", getUsersProfile(userId));
@@ -240,7 +239,7 @@ public class TelegramFacade {
     @SneakyThrows
     public File getUsersProfile(int userId) {
         UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-        File profileFile = ResourceUtils.getFile("classpath:static/docs/users_profile.txt");
+        File profileFile = ResourceUtils.getFile("classpath:static/docs/Your order.txt");
 
         try (FileWriter fw = new FileWriter(profileFile.getAbsoluteFile());
              BufferedWriter bw = new BufferedWriter(fw)) {

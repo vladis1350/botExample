@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         String usersAnswer = inputMsg.getText();
         int userId = inputMsg.getFrom().getId();
         long chatId = inputMsg.getChatId();
+        ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard();
 
         UserProfileData profileData = userDataCache.getUserProfileData(userId);
         BotState botState = userDataCache.getUsersCurrentBotState(userId);
@@ -231,6 +235,7 @@ public class FillingOrderHandler implements InputMessageHandler {
             profileData.setCommentsToOrder(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.OrderFilled");
+            replyToUser.setReplyMarkup(replyKeyboardMarkup);
         }
 
         userDataCache.saveUserProfileData(userId, profileData);
@@ -329,6 +334,31 @@ public class FillingOrderHandler implements InputMessageHandler {
         inlineKeyboardMarkup2.setKeyboard(rowList);
 
         return inlineKeyboardMarkup2;
+    }
+
+    private ReplyKeyboardMarkup getMainMenuKeyboard() {
+
+        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        List<KeyboardRow> keyboard = new ArrayList<>();
+
+        KeyboardRow row1 = new KeyboardRow();
+        KeyboardRow row2 = new KeyboardRow();
+        KeyboardRow row3 = new KeyboardRow();
+        KeyboardRow row4 = new KeyboardRow();
+        row1.add(new KeyboardButton("Сделать заказ"));
+        row2.add(new KeyboardButton("Мой заказ"));
+        row3.add(new KeyboardButton("Помощь"));
+        row4.add(new KeyboardButton("Менеджер"));
+        keyboard.add(row1);
+        keyboard.add(row2);
+        keyboard.add(row3);
+        keyboard.add(row4);
+        replyKeyboardMarkup.setKeyboard(keyboard);
+        return replyKeyboardMarkup;
     }
 
 
