@@ -1,5 +1,6 @@
 package by.uniqo.bot.service;
 
+import by.uniqo.bot.utils.Emojis;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
@@ -27,4 +28,7 @@ public class ReplyMessagesService {
         return localeMessageService.getMessage(replyText);
     }
 
+    public String getReplyMessage(String replyText, Emojis arrowdown) {
+        return localeMessageService.getMessage(replyText, Emojis.ARROWDOWN);
+    }
 }

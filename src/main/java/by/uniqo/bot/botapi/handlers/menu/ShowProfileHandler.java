@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
- * @author Sergei Viacheslaev
+ * @author has been inspired by Sergei Viacheslaev's work
  */
 @Component
 public class ShowProfileHandler implements InputMessageHandler {

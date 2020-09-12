@@ -1,6 +1,7 @@
 package by.uniqo.bot;
 
 import by.uniqo.bot.botapi.handlers.TelegramFacade;
+import by.uniqo.bot.utils.Emojis;
 import lombok.SneakyThrows;
 import org.springframework.util.ResourceUtils;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;

@@ -5,6 +5,7 @@ import by.uniqo.bot.botapi.handlers.fillingOrder.UserProfileData;
 import by.uniqo.bot.cache.UserDataCache;
 import by.uniqo.bot.service.MainMenuService;
 import by.uniqo.bot.service.ReplyMessagesService;
+import by.uniqo.bot.utils.Emojis;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -181,7 +182,7 @@ public class TelegramFacade {
             userProfileData.setColorOfModelText(1);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
-            myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-symbol.jpg");
+            myBot.sendPhoto(chatId, messagesService.getReplyText(null), "static/images/Web-symbol.jpg");
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
         } else if (buttonQuery.getData().equals("button2")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
@@ -213,6 +214,8 @@ public class TelegramFacade {
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyText("reply.askStart2"), "static/images/Web-symbol.jpg");
+
+
             callBackAnswer = new SendMessage(chatId, "Выберите номер символа");
 
         } else {
