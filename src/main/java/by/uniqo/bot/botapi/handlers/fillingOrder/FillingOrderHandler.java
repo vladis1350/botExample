@@ -208,7 +208,6 @@ public class FillingOrderHandler implements InputMessageHandler {
 
         if (botState.equals(BotState.ASK_CREDENTIALS)) {
             profileData.setCredentials(usersAnswer);
-//            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askPhoneNumber");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_URLVK);
         }
@@ -217,6 +216,7 @@ public class FillingOrderHandler implements InputMessageHandler {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askUrlVK");
             profileData.setPhoneNumber(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_DELIVERYADDRESS);
+            replyToUser.setReplyMarkup(getAnswerForVK());
         }
 
         if (botState.equals(BotState.ASK_DELIVERYADDRESS)) {
@@ -360,6 +360,19 @@ public class FillingOrderHandler implements InputMessageHandler {
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;
     }
+    private ReplyKeyboardMarkup getAnswerForVK(){
+        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
 
+        List<KeyboardRow> keyboard = new ArrayList<>();
+
+        KeyboardRow row5 = new KeyboardRow();
+        row5.add(new KeyboardButton("Пропустить"));
+        keyboard.add(row5);
+        replyKeyboardMarkup.setKeyboard(keyboard);
+        return  replyKeyboardMarkup;
+    }
 
 }
