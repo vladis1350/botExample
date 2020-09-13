@@ -68,14 +68,14 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_TAPESCOLOR)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-catalogColor.JPG");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "https://i.ibb.co/18vZQWZ/Web-catalog-2021.jpg");
             profileData.setTotalNumber(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askTapesColor");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_MODELNUMBER);
         }
 
         if (botState.equals(BotState.ASK_MODELNUMBER)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-model.JPG");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "https://i.ibb.co/42WpfTN/Web-20212.jpg");
             profileData.setTapesColor(Integer.parseInt(usersAnswer));
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askModelNumber");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOROFMODELTEXT);
@@ -120,7 +120,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-additionalOrder.JPG");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "https://i.ibb.co/rykFY5r/Web-20215.jpg");
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
