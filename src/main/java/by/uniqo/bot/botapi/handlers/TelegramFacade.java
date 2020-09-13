@@ -239,7 +239,7 @@ public class TelegramFacade {
     @SneakyThrows
     public File getUsersProfile(int userId) {
         UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-        File profileFile = ResourceUtils.getInputStream("classpath:static/docs/Your order.TXT");
+        File profileFile = ResourceUtils.getFile("classpath:static/docs/Your_order.TXT");
 
         try (FileWriter fw = new FileWriter(profileFile.getAbsoluteFile());
              BufferedWriter bw = new BufferedWriter(fw)) {
