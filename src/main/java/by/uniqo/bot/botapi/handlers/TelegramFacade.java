@@ -3,6 +3,7 @@ package by.uniqo.bot.botapi.handlers;
 import by.uniqo.bot.Bot;
 import by.uniqo.bot.botapi.handlers.fillingOrder.UserProfileData;
 import by.uniqo.bot.cache.UserDataCache;
+import by.uniqo.bot.service.LocaleMessageService;
 import by.uniqo.bot.service.MainMenuService;
 import by.uniqo.bot.service.ReplyMessagesService;
 import by.uniqo.bot.utils.Emojis;
@@ -103,6 +104,7 @@ public class TelegramFacade {
     private BotApiMethod<?> processCallbackQuery(CallbackQuery buttonQuery) {
         final long chatId = buttonQuery.getMessage().getChatId();
         final int userId = buttonQuery.getFrom().getId();
+        LocaleMessageService localeMessageService;
 
         BotApiMethod<?> callBackAnswer = mainMenuService.getMainMenuMessage(chatId, "Воспользуйтесь главным меню");
 
@@ -114,8 +116,11 @@ public class TelegramFacade {
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TAPESCOLOR);
         } else if (buttonQuery.getData().equals("buttonPromotionsAndDiscounts")) {
             callBackAnswer = sendAnswerCallbackQuery("У нас для вас скидки", false, buttonQuery);
+        } else if (buttonQuery.getData().equals("buttonPaymentAndDelivery")) {
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.PaymentAndDelivery"));
+
         } else if (buttonQuery.getData().equals("buttonCallForManager")) {
-            callBackAnswer = sendAnswerCallbackQuery("reply.Manager", true, buttonQuery);
+            callBackAnswer = sendAnswerCallbackQuery("+375xx xxx xx xx", true, buttonQuery);
             //From menus in additional services
         }  else if (buttonQuery.getData().equals("buttonStars")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
@@ -168,40 +173,40 @@ public class TelegramFacade {
 
 
         //From ModelColorText choose buttons
-        else if (buttonQuery.getData().equals("buttonOne")) {
+        else if (buttonQuery.getData().equals("goldFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText(1);
+            userProfileData.setColorOfModelText("name.foilOne");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
             callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
-        } else if (buttonQuery.getData().equals("button2")) {
+        } else if (buttonQuery.getData().equals("silverFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText(2);
-            userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
-
-        } else if (buttonQuery.getData().equals("button3")) {
-            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText(3);
+            userProfileData.setColorOfModelText("name.foilTwo");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
             callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
 
-        } else if (buttonQuery.getData().equals("button4")) {
+        } else if (buttonQuery.getData().equals("redFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText(4);
+            userProfileData.setColorOfModelText("name.foilThree");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
             callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
 
-        } else if (buttonQuery.getData().equals("button5")) {
+        } else if (buttonQuery.getData().equals("blueFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText(5);
+            userProfileData.setColorOfModelText("name.foilFour");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
+            callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
+
+        } else if (buttonQuery.getData().equals("blackFoil")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setColorOfModelText("name.foilFive");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");

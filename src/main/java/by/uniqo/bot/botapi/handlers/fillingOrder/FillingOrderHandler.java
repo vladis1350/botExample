@@ -231,35 +231,35 @@ public class FillingOrderHandler implements InputMessageHandler {
 
     private InlineKeyboardMarkup getButtonsMarkup2() {
         InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
-        InlineKeyboardButton buttonOne = new InlineKeyboardButton().setText("Золотая фольга");
-        InlineKeyboardButton button2 = new InlineKeyboardButton().setText("Серебрянная фольга");
-        InlineKeyboardButton button3 = new InlineKeyboardButton().setText("Красная фольга");
-        InlineKeyboardButton button4 = new InlineKeyboardButton().setText("Синяя фольга");
-        InlineKeyboardButton button5 = new InlineKeyboardButton().setText("Черный матовый");
+        InlineKeyboardButton goldFoil = new InlineKeyboardButton().setText("foil.nameOne");
+        InlineKeyboardButton silverFoil = new InlineKeyboardButton().setText("foil.nameTwo");
+        InlineKeyboardButton redFoil = new InlineKeyboardButton().setText("foil.nameThree");
+        InlineKeyboardButton blueFoil = new InlineKeyboardButton().setText("foil.nameFour");
+        InlineKeyboardButton blackFoil = new InlineKeyboardButton().setText("foil.nameFive");
 
 
         //Every button must have callBackData, or else not work !
-        buttonOne.setCallbackData("buttonOne");
-        button2.setCallbackData("button2");
-        button3.setCallbackData("button3");
-        button4.setCallbackData("button4");
-        button5.setCallbackData("button5");
+        goldFoil.setCallbackData("goldFoil");
+        silverFoil.setCallbackData("silverFoil");
+        redFoil.setCallbackData("redFoil");
+        blueFoil.setCallbackData("blueFoil");
+        blackFoil.setCallbackData("blackFoil");
 
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        keyboardButtonsRow1.add(buttonOne);
+        keyboardButtonsRow1.add(goldFoil);
 
         List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        keyboardButtonsRow2.add(button2);
+        keyboardButtonsRow2.add(silverFoil);
 
         List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
-        keyboardButtonsRow3.add(button3);
+        keyboardButtonsRow3.add(redFoil);
 
         List<InlineKeyboardButton> keyboardButtonsRow4 = new ArrayList<>();
-        keyboardButtonsRow4.add(button4);
+        keyboardButtonsRow4.add(blueFoil);
 
         List<InlineKeyboardButton> keyboardButtonsRow5 = new ArrayList<>();
-        keyboardButtonsRow5.add(button5);
+        keyboardButtonsRow5.add(blackFoil);
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(keyboardButtonsRow1);
