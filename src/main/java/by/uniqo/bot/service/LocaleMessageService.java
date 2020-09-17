@@ -9,7 +9,7 @@ import java.util.Locale;
 
 /**Работает с файлом шаблоном "ответных сообщений" messages.properties
  *
- * @author Sergei Viacheslaev
+ * @author has been inspired by the project of Sergei Viacheslaev
  */
 @Service
 public class LocaleMessageService {

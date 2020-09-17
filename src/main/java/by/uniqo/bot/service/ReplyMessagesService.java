@@ -28,7 +28,7 @@ public class ReplyMessagesService {
         return localeMessageService.getMessage(replyText);
     }
 
-    public String getReplyMessage(String replyText, Emojis arrowdown) {
+    public String getReplyMessage(String replyText, Emojis emojis) {
         return localeMessageService.getMessage(replyText, Emojis.ARROWDOWN);
     }
 }

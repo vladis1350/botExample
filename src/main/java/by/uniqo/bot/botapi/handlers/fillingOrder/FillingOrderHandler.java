@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
@@ -93,6 +94,7 @@ public class FillingOrderHandler implements InputMessageHandler {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askSymbolNumber");
             profileData.setColorOfModelText(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            replyToUser.setReplyMarkup(getAnswerForSymbolNumber());
         }
 
         if (botState.equals(BotState.ASK_NUMBEROFMEN)) {
@@ -164,12 +166,27 @@ public class FillingOrderHandler implements InputMessageHandler {
         return replyToUser;
     }
 
+    private ReplyKeyboard getAnswerForSymbolNumber() {
+        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+
+        List<KeyboardRow> keyboard = new ArrayList<>();
+
+        KeyboardRow row5 = new KeyboardRow();
+        row5.add(new KeyboardButton("reply.ButtonSetForSymbolNumber"));
+        keyboard.add(row5);
+        replyKeyboardMarkup.setKeyboard(keyboard);
+        return  replyKeyboardMarkup;
+    }
+
 
     private InlineKeyboardMarkup getInlineMessageButtons() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton buttonStars = new InlineKeyboardButton().setText("Стразы");
-        InlineKeyboardButton buttonScroll = new InlineKeyboardButton().setText("Приветственный свиток");
+        InlineKeyboardButton buttonScroll = new InlineKeyboardButton().setText("Пригласительный свиток");
         InlineKeyboardButton buttonBigBell = new InlineKeyboardButton().setText("Большой колокольчик");
         InlineKeyboardButton buttonLittleBell = new InlineKeyboardButton().setText("Маленький колокольчик");
         InlineKeyboardButton buttonRibbon = new InlineKeyboardButton().setText("Бант");
