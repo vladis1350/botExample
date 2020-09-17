@@ -111,7 +111,7 @@ public class TelegramFacade {
 
         //From Destiny choose buttons
         if (buttonQuery.getData().equals("buttonStartOrder")) {
-            callBackAnswer = new SendMessage(chatId, "reply.askStart");
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askTotalNumber"));
 
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TAPESCOLOR);
         } else if (buttonQuery.getData().equals("buttonPromotionsAndDiscounts")) {
@@ -175,44 +175,44 @@ public class TelegramFacade {
         //From ModelColorText choose buttons
         else if (buttonQuery.getData().equals("goldFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText("name.foilOne");
+            userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameOne"));
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
         } else if (buttonQuery.getData().equals("silverFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText("name.foilTwo");
+            userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameTwo"));
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
 
         } else if (buttonQuery.getData().equals("redFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText("name.foilThree");
+            userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameThree"));
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
 
         } else if (buttonQuery.getData().equals("blueFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText("name.foilFour");
+            userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameFour"));
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
 
         } else if (buttonQuery.getData().equals("blackFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            userProfileData.setColorOfModelText("name.foilFive");
+            userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameFive"));
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
 
 
-            callBackAnswer = new SendMessage(chatId, "reply.askModelNumber");
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
 
         } else {
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);

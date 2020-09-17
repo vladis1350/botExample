@@ -4,6 +4,7 @@ import by.uniqo.bot.Bot;
 import by.uniqo.bot.botapi.handlers.BotState;
 import by.uniqo.bot.botapi.handlers.InputMessageHandler;
 import by.uniqo.bot.cache.UserDataCache;
+import by.uniqo.bot.service.LocaleMessageService;
 import by.uniqo.bot.service.ReplyMessagesService;
 import by.uniqo.bot.utils.Emojis;
 import lombok.extern.slf4j.Slf4j;
@@ -230,8 +231,9 @@ public class FillingOrderHandler implements InputMessageHandler {
     }
 
     private InlineKeyboardMarkup getButtonsMarkup2() {
+        LocaleMessageService localeMessageService;
         InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
-        InlineKeyboardButton goldFoil = new InlineKeyboardButton().setText("foil.nameOne");
+        InlineKeyboardButton goldFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("foil.nameOne"));
         InlineKeyboardButton silverFoil = new InlineKeyboardButton().setText("foil.nameTwo");
         InlineKeyboardButton redFoil = new InlineKeyboardButton().setText("foil.nameThree");
         InlineKeyboardButton blueFoil = new InlineKeyboardButton().setText("foil.nameFour");
