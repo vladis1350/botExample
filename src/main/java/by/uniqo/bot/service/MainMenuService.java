@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Управляет отображением главного меню в чате.
  *
- * @author Sergei Viacheslaev
+ * @author has been inspired by Sergei Viacheslaev's project
  */
 @Service
 public class MainMenuService {

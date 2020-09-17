@@ -68,15 +68,15 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_TAPESCOLOR)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "https://i.ibb.co/18vZQWZ/Web-catalog-2021.jpg");
-            profileData.setTotalNumber(Integer.parseInt(usersAnswer));
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-catalogColor.JPG");
+            profileData.setTotalNumber(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askTapesColor");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_MODELNUMBER);
         }
 
         if (botState.equals(BotState.ASK_MODELNUMBER)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "https://i.ibb.co/42WpfTN/Web-20212.jpg");
-            profileData.setTapesColor(Integer.parseInt(usersAnswer));
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-model.JPG");
+            profileData.setTapesColor(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askModelNumber");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOROFMODELTEXT);
 
@@ -84,31 +84,31 @@ public class FillingOrderHandler implements InputMessageHandler {
 
         if (botState.equals(BotState.ASK_COLOROFMODELTEXT)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askColorOfModelText");
-            profileData.setModelNumber(Integer.parseInt(usersAnswer));
+            profileData.setModelNumber(usersAnswer);
             replyToUser.setReplyMarkup(getButtonsMarkup2());
 
         }
 
         if (botState.equals(BotState.ASK_SYMBOLNUMBER)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askSymbolNumber");
-            profileData.setColorOfModelText(Integer.parseInt(usersAnswer));
+            profileData.setColorOfModelText(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
         }
 
         if (botState.equals(BotState.ASK_NUMBEROFMEN)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfMen");
-            profileData.setSymbolNumber(Integer.parseInt(usersAnswer));
+            profileData.setSymbolNumber(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
         }
 
         if (botState.equals(BotState.ASK_NUMBEROFWOMEN)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfWomen");
-            profileData.setNumberOfMen(Integer.parseInt(usersAnswer));
+            profileData.setNumberOfMen(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
         }
 
         if (botState.equals(BotState.ASK_NUMBEROFTEACHERS)) {
-            profileData.setNumberOfWomen(Integer.parseInt(usersAnswer));
+            profileData.setNumberOfWomen(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfTeacher");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCHOOLNUMBER);
         }
@@ -120,92 +120,13 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
-            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "https://i.ibb.co/rykFY5r/Web-20215.jpg");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-additionalOrder.JPG");
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
-//            if (profileData.getLittleBell()!=null) {
-//                profileData.setLittleBellColor(Integer.parseInt(usersAnswer));;
-//            }
-//            if (profileData.getBigBell()!=null) {
-//                profileData.setBigBellColor(Integer.parseInt(usersAnswer));
-//            }
-
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
             replyToUser.setReplyMarkup(getInlineMessageButtons());
         }
-
-//        if (botState.equals(BotState.ASK_LITTLEBELL)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBell");
-//            profileData.setAdditionalService(usersAnswer);
-//            replyToUser.setReplyMarkup(getButtonsMarkup());
-//        }
-//
-//        if (botState.equals(BotState.ASK_LITTLEBELLCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askLittleBellColor");
-////            profileData.setLittleBell(usersAnswer);
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
-//        }
-//
-//        if (botState.equals(BotState.ASK_BIGBELL)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBell");
-//            profileData.setLittleBellColor(Integer.parseInt(usersAnswer));
-//            replyToUser.setReplyMarkup(getButtonsMarkup());
-//        }
-//
-//        if (botState.equals(BotState.ASK_BIGBELLCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBigBellColor");
-////            profileData.setBigBell(usersAnswer);
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
-//        }
-//
-//        if (botState.equals(BotState.ASK_STARS)) {
-//            profileData.setBigBellColor(Integer.parseInt(usersAnswer));
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askStars");
-//            replyToUser.setReplyMarkup(getButtonsMarkup());
-//        }
-//
-//        if (botState.equals(BotState.ASK_SCROLL)) {
-//            profileData.setStars(usersAnswer);
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScroll");
-//            replyToUser.setReplyMarkup(getButtonsMarkup());
-//        }
-//
-//        if (botState.equals(BotState.ASK_SCROLLCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askScrollColor");
-////            profileData.setScroll(usersAnswer);
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//            profileData.setScrollColor(Integer.parseInt(usersAnswer));
-//        }
-//
-//        if (botState.equals(BotState.ASK_RIBBON)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbon");
-//            profileData.setScrollColor(Integer.parseInt(usersAnswer));
-//            replyToUser.setReplyMarkup(getButtonsMarkup());
-//        }
-//
-//        if (botState.equals(BotState.ASK_RIBBONCOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askRibbonColor");
-////            profileData.setRibbon(usersAnswer);
-//            profileData.setRibbonColor(Integer.parseInt(usersAnswer));
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
-//
-//        if (botState.equals(BotState.ASK_BOWTIE)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtie");
-//            profileData.setRibbonColor(Integer.parseInt(usersAnswer));
-//            replyToUser.setReplyMarkup(getButtonsMarkup());
-//        }
-//
-//        if (botState.equals(BotState.ASK_BOWTIECOLOR)) {
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askBowtieColor");
-////            profileData.setBowtie(usersAnswer);
-//            profileData.setBowtieColor(Integer.parseInt(usersAnswer));
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
-
         if (botState.equals(BotState.ASK_CREDENTIALS)) {
             profileData.setCredentials(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askPhoneNumber");

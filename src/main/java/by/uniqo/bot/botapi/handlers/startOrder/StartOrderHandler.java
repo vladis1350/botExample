@@ -1,11 +1,9 @@
 package by.uniqo.bot.botapi.handlers.startOrder;
 
-import by.uniqo.bot.Bot;
 import by.uniqo.bot.botapi.handlers.BotState;
 import by.uniqo.bot.botapi.handlers.InputMessageHandler;
 import by.uniqo.bot.service.ReplyMessagesService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Спрашивает пользователя- хочет ли он получить предсказание.
+ * Спрашивает пользователя- хочет ли он сделать заказ. Меню первого уровня
  */
 
 @Slf4j
@@ -50,24 +48,24 @@ public class StartOrderHandler implements InputMessageHandler {
     private InlineKeyboardMarkup getInlineMessageButtons() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
-        InlineKeyboardButton buttonYes = new InlineKeyboardButton().setText("Да");
-        InlineKeyboardButton buttonNo = new InlineKeyboardButton().setText("Нет, спасибо");
-        InlineKeyboardButton buttonIwillThink = new InlineKeyboardButton().setText("Я подумаю");
-        InlineKeyboardButton buttonIdontKnow = new InlineKeyboardButton().setText("Еще не определился");
+        InlineKeyboardButton buttonStartOrder = new InlineKeyboardButton().setText("Оформить заказ");
+        InlineKeyboardButton buttonPaymentAndDelivery = new InlineKeyboardButton().setText("Оплата и доставка");
+        InlineKeyboardButton buttonPromotionsAndDiscounts = new InlineKeyboardButton().setText("СКИДКИ И АКЦИИ");
+        InlineKeyboardButton buttonCallForManager = new InlineKeyboardButton().setText("Связаться с менеджером");
 
         //Every button must have callBackData, or else not work !
-        buttonYes.setCallbackData("buttonYes");
-        buttonNo.setCallbackData("buttonNo");
-        buttonIwillThink.setCallbackData("buttonIwillThink");
-        buttonIdontKnow.setCallbackData("-");
+        buttonStartOrder.setCallbackData("buttonStartOrder");
+        buttonPaymentAndDelivery.setCallbackData("buttonPaymentAndDelivery");
+        buttonPromotionsAndDiscounts.setCallbackData("buttonPromotionsAndDiscounts");
+        buttonCallForManager.setCallbackData("buttonCallForManager");
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        keyboardButtonsRow1.add(buttonYes);
-        keyboardButtonsRow1.add(buttonNo);
+        keyboardButtonsRow1.add(buttonStartOrder);
+        keyboardButtonsRow1.add(buttonPaymentAndDelivery);
 
         List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        keyboardButtonsRow2.add(buttonIwillThink);
-        keyboardButtonsRow2.add(buttonIdontKnow);
+        keyboardButtonsRow2.add(buttonPromotionsAndDiscounts);
+        keyboardButtonsRow2.add(buttonCallForManager);
 
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();

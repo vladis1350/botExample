@@ -26,18 +26,18 @@ public class UserProfileData {
     String scroll;
     String ribbon;
     String bowtie;
-    int tapesColor;
-    int totalNumber;
-    int modelNumber;
-    int colorOfModelText;
-    int symbolNumber;
-    int numberOfMen;
-    int numberOfWomen;
-    int littleBellColor;
-    int bigBellColor;
-    int scrollColor;
-    int ribbonColor;
-    int bowtieColor;
+    String tapesColor;
+    String totalNumber;
+    String modelNumber;
+    String colorOfModelText;
+    String symbolNumber;
+    String numberOfMen;
+    String numberOfWomen;
+    String littleBellColor;
+    String bigBellColor;
+    String scrollColor;
+    String ribbonColor;
+    String bowtieColor;
 
     @Override
     public String toString() {
