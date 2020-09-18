@@ -234,10 +234,10 @@ public class FillingOrderHandler implements InputMessageHandler {
         LocaleMessageService localeMessageService;
         InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
         InlineKeyboardButton goldFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("foil.nameOne"));
-        InlineKeyboardButton silverFoil = new InlineKeyboardButton().setText("foil.nameTwo");
-        InlineKeyboardButton redFoil = new InlineKeyboardButton().setText("foil.nameThree");
-        InlineKeyboardButton blueFoil = new InlineKeyboardButton().setText("foil.nameFour");
-        InlineKeyboardButton blackFoil = new InlineKeyboardButton().setText("foil.nameFive");
+        InlineKeyboardButton silverFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("foil.nameTwo"));
+        InlineKeyboardButton redFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("foil.nameThree"));
+        InlineKeyboardButton blueFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("foil.nameFour"));
+        InlineKeyboardButton blackFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("foil.nameFive"));
 
 
         //Every button must have callBackData, or else not work !
