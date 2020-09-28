@@ -240,9 +240,40 @@ public class TelegramFacade {
 
         } else if (buttonQuery.getData().equals("standard")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setNumberOfTeacher(userProfileData.getNumberOfTeacher() + " - стандарт");
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
-            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askNumberOf"));
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askSchoolNumber"));
+            callBackAnswer = buttonsHandler.getMessageAndButtonSkipNumberSchool(userId);
+
+        } else if (buttonQuery.getData().equals("continueEntryData")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askSchoolNumber"));
+            callBackAnswer = buttonsHandler.getMessageAndButtonSkipNumberSchool(userId);
+
+        } else if (buttonQuery.getData().equals("skipApartment")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setApartment("нет");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ORDER_FILLED);
+            callBackAnswer = buttonsHandler.getMessageAndButtonsSkipComment(userId);
+
+        } else if (buttonQuery.getData().equals("skipComment")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setCommentsToOrder("нет");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ORDER_FILLED);
+            callBackAnswer = buttonsHandler.getMessageAndMainMenu(chatId);
+
+        } else if (buttonQuery.getData().equals("buttonSkipNumberSchool")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userProfileData.setSchoolNumber("нет");
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-additionalOrder.JPG");
+            callBackAnswer = buttonsHandler.getMessageAndButtonsAdditionalService(chatId);
         }
         else {
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);

@@ -71,6 +71,7 @@ public class BotStateContext {
             case ORDER_FILLED:
             case ASK_UPLOAD_FILE_LIST_WOMEN:
             case ASK_UPLOAD_FILE_LIST_MEN:
+            case ASK_TEACHER_STANDARD_RIBBON:
                 return true;
             default:
                 return false;

@@ -149,23 +149,29 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_NUMBEROFTEACHERS)) {
             profileData.setNumberOfWomen(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfTeacher");
-//            replyToUser.setReplyMarkup(buttonsHandler.getMessageAndButtonStandardRibbon(chatId));
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCHOOLNUMBER);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_TEACHER_STANDARD_RIBBON);
         }
 
-        if (botState.equals(BotState.ASK_SCHOOLNUMBER)) {
+        if (botState.equals(BotState.ASK_TEACHER_STANDARD_RIBBON)) {
+            System.out.println(usersAnswer);
             profileData.setNumberOfTeacher(usersAnswer);
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askSchoolNumber");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askStandardRibbon");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCHOOLNUMBER);
+            replyToUser.setReplyMarkup(getButtonsStandardRibbon());
         }
+
+//        if (botState.equals(BotState.ASK_SCHOOLNUMBER)) {
+//            profileData.setNumberOfTeacher(usersAnswer);
+//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askSchoolNumber");
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
+//        }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-additionalOrder.JPG");
             if (profileData.getSchoolNumber()==null) {
                 profileData.setSchoolNumber(usersAnswer);
             }
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askAdditionalServices");
-            replyToUser.setReplyMarkup(getInlineMessageButtons());
+            replyToUser = buttonsHandler.getMessageAndButtonsAdditionalService(userId);
         }
         if (botState.equals(BotState.ASK_CREDENTIALS)) {
             profileData.setCredentials(usersAnswer);
@@ -174,9 +180,15 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_INDEX)) {
-            profileData.setPhoneNumber(usersAnswer);
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askIndex");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CITY);
+            if (checkPhoneNumber(usersAnswer)) {
+                profileData.setPhoneNumber(usersAnswer);
+                replyToUser = messagesService.getReplyMessage(chatId, "reply.askIndex");
+                userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CITY);
+            } else {
+                replyToUser = messagesService.getReplyMessage(chatId, "reply.errPhoneNumber");
+                userDataCache.setUsersCurrentBotState(userId, BotState.ASK_INDEX);
+            }
+
         }
         if (botState.equals(BotState.ASK_CITY)) {
             profileData.setIndex(usersAnswer);
@@ -197,12 +209,13 @@ public class FillingOrderHandler implements InputMessageHandler {
             profileData.setHome(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askApartment");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COMMENTSTOORDER);
+            replyToUser.setReplyMarkup(getButtonsSkipApartment());
         }
 
         if (botState.equals(BotState.ASK_COMMENTSTOORDER)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askCommentsToOrder");
             profileData.setApartment(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ORDER_FILLED);
+            replyToUser = buttonsHandler.getMessageAndButtonsSkipComment(userId);
         }
         if (botState.equals(BotState.ORDER_FILLED)) {
             profileData.setCommentsToOrder(usersAnswer);
@@ -214,6 +227,10 @@ public class FillingOrderHandler implements InputMessageHandler {
         userDataCache.saveUserProfileData(userId, profileData);
 
         return replyToUser;
+    }
+
+    private boolean checkPhoneNumber(String number){
+        return number.matches("^(\\+375)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$");
     }
 
     public void uploadFile(String file_name, String file_id) throws IOException {
@@ -246,54 +263,6 @@ public class FillingOrderHandler implements InputMessageHandler {
         keyboard.add(row5);
         replyKeyboardMarkup.setKeyboard(keyboard);
         return  replyKeyboardMarkup;
-    }
-
-
-    private InlineKeyboardMarkup getInlineMessageButtons() {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-
-        InlineKeyboardButton buttonStars = new InlineKeyboardButton().setText("Стразы");
-        InlineKeyboardButton buttonScroll = new InlineKeyboardButton().setText("Пригласительный свиток");
-        InlineKeyboardButton buttonBigBell = new InlineKeyboardButton().setText("Большой колокольчик");
-        InlineKeyboardButton buttonLittleBell = new InlineKeyboardButton().setText("Маленький колокольчик");
-        InlineKeyboardButton buttonRibbon = new InlineKeyboardButton().setText("Бант");
-        InlineKeyboardButton buttonBowtie = new InlineKeyboardButton().setText("Бабочка");
-        InlineKeyboardButton buttonNext = new InlineKeyboardButton().setText("Нет");
-
-        //Every button must have callBackData, or else not work !
-        buttonStars.setCallbackData("buttonStars");
-        buttonScroll.setCallbackData("buttonScroll");
-        buttonBigBell.setCallbackData("buttonBigBell");
-        buttonLittleBell.setCallbackData("buttonLittleBell");
-        buttonRibbon.setCallbackData("buttonRibbon");
-        buttonBowtie.setCallbackData("buttonBowtie");
-        buttonNext.setCallbackData("buttonNext");
-
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        keyboardButtonsRow1.add(buttonStars);
-        keyboardButtonsRow1.add(buttonScroll);
-
-        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        keyboardButtonsRow2.add(buttonBigBell);
-        keyboardButtonsRow2.add(buttonLittleBell);
-
-        List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
-        keyboardButtonsRow3.add(buttonRibbon);
-        keyboardButtonsRow3.add(buttonBowtie);
-
-        List<InlineKeyboardButton> keyboardButtonsRow4 = new ArrayList<>();
-        keyboardButtonsRow4.add(buttonNext);
-
-
-        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-        rowList.add(keyboardButtonsRow1);
-        rowList.add(keyboardButtonsRow2);
-        rowList.add(keyboardButtonsRow3);
-        rowList.add(keyboardButtonsRow4);
-
-        inlineKeyboardMarkup.setKeyboard(rowList);
-
-        return inlineKeyboardMarkup;
     }
 
     private InlineKeyboardMarkup getButtonsMarkup2() {
@@ -342,6 +311,47 @@ public class FillingOrderHandler implements InputMessageHandler {
         return inlineKeyboardMarkup2;
     }
 
+    private InlineKeyboardMarkup getButtonsStandardRibbon() {
+        LocaleMessageService localeMessageService;
+        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+        InlineKeyboardButton buttonStandard = new InlineKeyboardButton().setText(messagesService.getReplyText("btn.standard"));
+        InlineKeyboardButton buttonContinue = new InlineKeyboardButton().setText(messagesService.getReplyText("btn.continueEntryData"));
+
+        //Every button must have callBackData, or else not work !
+        buttonStandard.setCallbackData("standard");
+        buttonContinue.setCallbackData("continueEntryData");
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(buttonStandard);
+        keyboardButtonsRow1.add(buttonContinue);
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+
+        inlineKeyboardMarkup2.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup2;
+    }
+
+    private InlineKeyboardMarkup getButtonsSkipApartment() {
+        LocaleMessageService localeMessageService;
+        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+        InlineKeyboardButton buttonSkipApartment = new InlineKeyboardButton().setText(messagesService.getReplyText("btn.skipApartment"));
+
+        //Every button must have callBackData, or else not work !
+        buttonSkipApartment.setCallbackData("skipApartment");
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(buttonSkipApartment);
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+
+        inlineKeyboardMarkup2.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup2;
+    }
+
     private ReplyKeyboardMarkup getMainMenuKeyboard() {
 
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -366,6 +376,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;
     }
+
     private ReplyKeyboardMarkup getAnswerForVK(){
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);

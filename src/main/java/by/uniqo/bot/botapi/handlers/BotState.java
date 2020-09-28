@@ -39,6 +39,7 @@ public enum BotState {
     ASK_CITY,
     ASK_STREET,
     ASK_HOME,
+    ASK_TEACHER_STANDARD_RIBBON,
     ASK_APARTMENT,
     FILLING_ORDER,
     ORDER_FILLED,
