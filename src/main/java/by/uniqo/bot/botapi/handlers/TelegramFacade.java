@@ -1,15 +1,16 @@
 package by.uniqo.bot.botapi.handlers;
 
 import by.uniqo.bot.Bot;
+import by.uniqo.bot.botapi.handlers.buttonsHundler.ButtonsHandler;
 import by.uniqo.bot.botapi.handlers.fillingOrder.UserProfileData;
 import by.uniqo.bot.cache.UserDataCache;
 import by.uniqo.bot.service.LocaleMessageService;
 import by.uniqo.bot.service.MainMenuService;
 import by.uniqo.bot.service.ReplyMessagesService;
 import by.uniqo.bot.utils.Emojis;
-
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -19,10 +20,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author get inspired by Sergei Viacheslaev's video
@@ -30,6 +35,8 @@ import java.io.FileWriter;
 @Component
 @Slf4j
 public class TelegramFacade {
+    @Autowired
+    private ButtonsHandler buttonsHandler;
     private BotStateContext botStateContext;
     private UserDataCache userDataCache;
     private MainMenuService mainMenuService;
@@ -122,7 +129,7 @@ public class TelegramFacade {
         } else if (buttonQuery.getData().equals("buttonCallForManager")) {
             callBackAnswer = sendAnswerCallbackQuery("+375xx xxx xx xx", true, buttonQuery);
             //From menus in additional services
-        }  else if (buttonQuery.getData().equals("buttonStars")) {
+        } else if (buttonQuery.getData().equals("buttonStars")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setStars("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
@@ -162,7 +169,8 @@ public class TelegramFacade {
             userProfileData.setBowtie("Да");
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);;
+            callBackAnswer = sendAnswerCallbackQuery("Что-нибудь еще?", true, buttonQuery);
+            ;
 
         } else if (buttonQuery.getData().equals("buttonNext")) {
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CREDENTIALS);
@@ -171,50 +179,62 @@ public class TelegramFacade {
         }
 
 
-
         //From ModelColorText choose buttons
         else if (buttonQuery.getData().equals("goldFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameOne"));
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_OPTION_SYMBOL_LAYOUT);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
+            callBackAnswer = buttonsHandler.getMessageAndButtonLeaveUnchanged(chatId);
+
         } else if (buttonQuery.getData().equals("silverFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameTwo"));
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_OPTION_SYMBOL_LAYOUT);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
+            callBackAnswer = buttonsHandler.getMessageAndButtonLeaveUnchanged(chatId);
 
         } else if (buttonQuery.getData().equals("redFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameThree"));
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_OPTION_SYMBOL_LAYOUT);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
+            callBackAnswer = buttonsHandler.getMessageAndButtonLeaveUnchanged(chatId);
 
         } else if (buttonQuery.getData().equals("blueFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameFour"));
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_OPTION_SYMBOL_LAYOUT);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
-            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
+            callBackAnswer = buttonsHandler.getMessageAndButtonLeaveUnchanged(chatId);
 
         } else if (buttonQuery.getData().equals("blackFoil")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setColorOfModelText(messagesService.getReplyText("foil.nameFive"));
             userDataCache.saveUserProfileData(userId, userProfileData);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_OPTION_SYMBOL_LAYOUT);
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-symbol.JPG");
+            callBackAnswer = buttonsHandler.getMessageAndButtonLeaveUnchanged(chatId);
 
+        } else if (buttonQuery.getData().equals("buttonLeaveUnchanged")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_OPTION_RIBBON);
+            callBackAnswer = buttonsHandler.getMessageAndButtonOptionRibbon(chatId);
 
-            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askModelNumber"));
+        } else if (buttonQuery.getData().equals("nameRibbon")) {
 
-        } else {
+        } else if (buttonQuery.getData().equals("unNameRibbon")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askNumberOfMen"));
+        }
+        else {
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
         }
 
@@ -224,6 +244,59 @@ public class TelegramFacade {
 
     }
 
+//    private SendMessage getMessageAndButtonLeaveUnchanged(long chatId) {
+//        String message = messagesService.getReplyText("reply.askModelNumber");
+//        return new SendMessage(chatId, message).setReplyMarkup(getButtonLeaveUnchanged());
+//    }
+//
+//    private SendMessage getMessageAndButtonOptionRibbon(long chatId) {
+//        String message = messagesService.getReplyText("reply.askOptionRibbon");
+//        return new SendMessage(chatId, message).setReplyMarkup(getButtonsOptionRibbon());
+//    }
+//
+//    private InlineKeyboardMarkup getButtonLeaveUnchanged() {
+//        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+//        InlineKeyboardButton goldFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("reply.ButtonLeaveUnchanged"));
+//
+//        //Every button must have callBackData, or else not work !
+//        goldFoil.setCallbackData("buttonLeaveUnchanged");
+//
+//
+//        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+//        keyboardButtonsRow1.add(goldFoil);
+//
+//
+//        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+//        rowList.add(keyboardButtonsRow1);
+//
+//        inlineKeyboardMarkup2.setKeyboard(rowList);
+//
+//        return inlineKeyboardMarkup2;
+//    }
+//
+//    private InlineKeyboardMarkup getButtonsOptionRibbon() {
+//        LocaleMessageService localeMessageService;
+//        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+//        InlineKeyboardButton nameRibbon = new InlineKeyboardButton().setText(messagesService.getReplyText("ribbon.name"));
+//        InlineKeyboardButton unNameRibbon = new InlineKeyboardButton().setText(messagesService.getReplyText("ribbon.unName"));
+//
+//        //Every button must have callBackData, or else not work !
+//        nameRibbon.setCallbackData("nameRibbon");
+//        unNameRibbon.setCallbackData("unNameRibbon");
+//
+//
+//
+//        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+//        keyboardButtonsRow1.add(nameRibbon);
+//        keyboardButtonsRow1.add(unNameRibbon);
+//
+//        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+//        rowList.add(keyboardButtonsRow1);
+//
+//        inlineKeyboardMarkup2.setKeyboard(rowList);
+//
+//        return inlineKeyboardMarkup2;
+//    }
 
     private AnswerCallbackQuery sendAnswerCallbackQuery(String text, boolean alert, CallbackQuery callbackquery) {
         AnswerCallbackQuery answerCallbackQuery = new AnswerCallbackQuery();

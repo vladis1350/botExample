@@ -3,11 +3,13 @@ package by.uniqo.bot.botapi.handlers.fillingOrder;
 import by.uniqo.bot.Bot;
 import by.uniqo.bot.botapi.handlers.BotState;
 import by.uniqo.bot.botapi.handlers.InputMessageHandler;
+import by.uniqo.bot.botapi.handlers.buttonsHundler.ButtonsHandler;
 import by.uniqo.bot.cache.UserDataCache;
 import by.uniqo.bot.service.LocaleMessageService;
 import by.uniqo.bot.service.ReplyMessagesService;
 import by.uniqo.bot.utils.Emojis;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -29,6 +31,8 @@ import java.util.List;
 @Slf4j
 @Component
 public class FillingOrderHandler implements InputMessageHandler {
+    @Autowired
+    private ButtonsHandler buttonsHandler;
     private UserDataCache userDataCache;
     private ReplyMessagesService messagesService;
     private Bot myBot;
@@ -85,26 +89,36 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_COLOROFMODELTEXT)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askColorOfModelText");
+            myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-colorInscription.JPG");
             profileData.setModelNumber(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askColorOfModelText");
             replyToUser.setReplyMarkup(getButtonsMarkup2());
 
         }
+        /**Выбор именных или неименных лент*/
 
-        if (botState.equals(BotState.ASK_SYMBOLNUMBER)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askSymbolNumber");
-            profileData.setColorOfModelText(usersAnswer);
+        if (botState.equals(BotState.ASK_OPTION_SYMBOL_LAYOUT)) {
+            profileData.setSymbolNumber(usersAnswer);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_OPTION_RIBBON);
+            replyToUser = buttonsHandler.getMessageAndButtonOptionRibbon(userId);
+        }
+        if (botState.equals(BotState.ASK_OPTION_RIBBON)) {
+            System.out.println(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
-            replyToUser.setReplyMarkup(getAnswerForSymbolNumber());
+            replyToUser = buttonsHandler.getMessageAndButtonOptionRibbon(userId);
         }
 
+        /**---------------------------------------------------------*/
+
         if (botState.equals(BotState.ASK_NUMBEROFMEN)) {
+            System.out.println(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfMen");
             profileData.setSymbolNumber(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
         }
 
         if (botState.equals(BotState.ASK_NUMBEROFWOMEN)) {
+            System.out.println(usersAnswer + " -> 4");
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfWomen");
             profileData.setNumberOfMen(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);

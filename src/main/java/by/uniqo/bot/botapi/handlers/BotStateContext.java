@@ -52,6 +52,8 @@ public class BotStateContext {
             case ASK_SCROLL:
             case ASK_SCROLLCOLOR:
             case ASK_RIBBON:
+            case ASK_OPTION_RIBBON:
+            case ASK_OPTION_SYMBOL_LAYOUT:
             case ASK_RIBBONCOLOR:
             case ASK_BOWTIE:
             case ASK_BOWTIECOLOR:
