@@ -53,6 +53,11 @@ public class BotStateContext {
             case ASK_SCROLLCOLOR:
             case ASK_RIBBON:
             case ASK_OPTION_RIBBON:
+            case ASK_INDEX:
+            case ASK_CITY:
+            case ASK_STREET:
+            case ASK_HOME:
+            case ASK_APARTMENT:
             case ASK_OPTION_SYMBOL_LAYOUT:
             case ASK_RIBBONCOLOR:
             case ASK_BOWTIE:
@@ -64,6 +69,8 @@ public class BotStateContext {
             case ASK_COMMENTSTOORDER:
             case FILLING_ORDER:
             case ORDER_FILLED:
+            case ASK_UPLOAD_FILE_LIST_WOMEN:
+            case ASK_UPLOAD_FILE_LIST_MEN:
                 return true;
             default:
                 return false;

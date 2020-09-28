@@ -38,6 +38,11 @@ public class UserProfileData {
     String scrollColor;
     String ribbonColor;
     String bowtieColor;
+    String index;
+    String city;
+    String street;
+    String home;
+    String apartment;
 
     @Override
     public String toString() {
@@ -47,11 +52,16 @@ public class UserProfileData {
                         "%s%nМаленький колокольчик  %s%nБольшой колокольчик" +
                         "  %s%nПригласительный свиток  %s%nБант  %s%nБабочка " +
                         " %s%nФИО %s%nТелефонный номер %s%nСсылка в вк" +
-                        " %s%nАдрес доставки %s%nКомментарии к заказу %s",
+                        " %s%nАдрес доставки: %s%nКомментарии к заказу %s",
                 "Данные по вашему заказу", getTotalNumber(), getTapesColor(), getModelNumber(),
                 getColorOfModelText(), getSymbolNumber(), getNumberOfMen(), getNumberOfWomen(),
                 getNumberOfTeacher(), getSchoolNumber(),getStars(),getLittleBell(),
                 getBigBell(), getScroll(), getRibbon(), getBowtie(), getCredentials(), getPhoneNumber(),
                 getUrlVK(), getDeliveryAddress(), getCommentsToOrder());
+    }
+
+    public String getDeliveryAddress() {
+        return String.format("%s%nПочтовый индекс: %s%nГород: %s%nУлица: %S%nДом: %s%nКвартира: %s", " ",
+                getIndex(), getCity(), getStreet(), getHome(), getApartment());
     }
 }

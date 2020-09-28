@@ -26,6 +26,11 @@ public class ButtonsHandler {
         return new SendMessage(chatId, message).setReplyMarkup(getButtonsOptionRibbon());
     }
 
+    public SendMessage getMessageAndButtonStandardRibbon(long chatId) {
+        String message = messagesService.getReplyText("reply.askStandardRibbon");
+        return new SendMessage(chatId, message).setReplyMarkup(getButtonsStandardRibbon());
+    }
+
     private InlineKeyboardMarkup getButtonLeaveUnchanged() {
         InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
         InlineKeyboardButton goldFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("reply.ButtonLeaveUnchanged"));
@@ -59,6 +64,26 @@ public class ButtonsHandler {
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
         keyboardButtonsRow1.add(nameRibbon);
         keyboardButtonsRow1.add(unNameRibbon);
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+
+        inlineKeyboardMarkup2.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup2;
+    }
+
+
+    private InlineKeyboardMarkup getButtonsStandardRibbon() {
+        LocaleMessageService localeMessageService;
+        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+        InlineKeyboardButton buttonStandard = new InlineKeyboardButton().setText(messagesService.getReplyText("ribbon.standard"));
+
+        //Every button must have callBackData, or else not work !
+        buttonStandard.setCallbackData("standard");
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(buttonStandard);
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(keyboardButtonsRow1);

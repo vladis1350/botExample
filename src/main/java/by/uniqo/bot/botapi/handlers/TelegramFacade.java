@@ -227,12 +227,22 @@ public class TelegramFacade {
             callBackAnswer = buttonsHandler.getMessageAndButtonOptionRibbon(chatId);
 
         } else if (buttonQuery.getData().equals("nameRibbon")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_UPLOAD_FILE_LIST_WOMEN);
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askUploadListMen"));
 
         } else if (buttonQuery.getData().equals("unNameRibbon")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
             callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askNumberOfMen"));
+
+        } else if (buttonQuery.getData().equals("standard")) {
+            UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+            userDataCache.saveUserProfileData(userId, userProfileData);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
+            callBackAnswer = new SendMessage(chatId, messagesService.getReplyText("reply.askNumberOf"));
         }
         else {
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
@@ -243,60 +253,6 @@ public class TelegramFacade {
 
 
     }
-
-//    private SendMessage getMessageAndButtonLeaveUnchanged(long chatId) {
-//        String message = messagesService.getReplyText("reply.askModelNumber");
-//        return new SendMessage(chatId, message).setReplyMarkup(getButtonLeaveUnchanged());
-//    }
-//
-//    private SendMessage getMessageAndButtonOptionRibbon(long chatId) {
-//        String message = messagesService.getReplyText("reply.askOptionRibbon");
-//        return new SendMessage(chatId, message).setReplyMarkup(getButtonsOptionRibbon());
-//    }
-//
-//    private InlineKeyboardMarkup getButtonLeaveUnchanged() {
-//        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
-//        InlineKeyboardButton goldFoil = new InlineKeyboardButton().setText(messagesService.getReplyText("reply.ButtonLeaveUnchanged"));
-//
-//        //Every button must have callBackData, or else not work !
-//        goldFoil.setCallbackData("buttonLeaveUnchanged");
-//
-//
-//        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-//        keyboardButtonsRow1.add(goldFoil);
-//
-//
-//        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-//        rowList.add(keyboardButtonsRow1);
-//
-//        inlineKeyboardMarkup2.setKeyboard(rowList);
-//
-//        return inlineKeyboardMarkup2;
-//    }
-//
-//    private InlineKeyboardMarkup getButtonsOptionRibbon() {
-//        LocaleMessageService localeMessageService;
-//        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
-//        InlineKeyboardButton nameRibbon = new InlineKeyboardButton().setText(messagesService.getReplyText("ribbon.name"));
-//        InlineKeyboardButton unNameRibbon = new InlineKeyboardButton().setText(messagesService.getReplyText("ribbon.unName"));
-//
-//        //Every button must have callBackData, or else not work !
-//        nameRibbon.setCallbackData("nameRibbon");
-//        unNameRibbon.setCallbackData("unNameRibbon");
-//
-//
-//
-//        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-//        keyboardButtonsRow1.add(nameRibbon);
-//        keyboardButtonsRow1.add(unNameRibbon);
-//
-//        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-//        rowList.add(keyboardButtonsRow1);
-//
-//        inlineKeyboardMarkup2.setKeyboard(rowList);
-//
-//        return inlineKeyboardMarkup2;
-//    }
 
     private AnswerCallbackQuery sendAnswerCallbackQuery(String text, boolean alert, CallbackQuery callbackquery) {
         AnswerCallbackQuery answerCallbackQuery = new AnswerCallbackQuery();

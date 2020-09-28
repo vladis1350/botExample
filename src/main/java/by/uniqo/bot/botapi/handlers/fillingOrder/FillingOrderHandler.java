@@ -9,6 +9,7 @@ import by.uniqo.bot.service.LocaleMessageService;
 import by.uniqo.bot.service.ReplyMessagesService;
 import by.uniqo.bot.utils.Emojis;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,13 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,18 +115,32 @@ public class FillingOrderHandler implements InputMessageHandler {
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             replyToUser = buttonsHandler.getMessageAndButtonOptionRibbon(userId);
         }
+        if (botState.equals(BotState.ASK_UPLOAD_FILE_LIST_MEN)) {
+            System.out.println(inputMsg);
+//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUploadListWomen");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_UPLOAD_FILE_LIST_WOMEN);
+        }
+        if (botState.equals(BotState.ASK_UPLOAD_FILE_LIST_WOMEN)) {
+            System.out.println(inputMsg);
+
+//            try {
+//                uploadFile(inputMsg.getDocument().getFileName(), inputMsg.getDocument().getFileId());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUploadListWomen");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
+        }
 
         /**---------------------------------------------------------*/
 
         if (botState.equals(BotState.ASK_NUMBEROFMEN)) {
-            System.out.println(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfMen");
             profileData.setSymbolNumber(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
         }
 
         if (botState.equals(BotState.ASK_NUMBEROFWOMEN)) {
-            System.out.println(usersAnswer + " -> 4");
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfWomen");
             profileData.setNumberOfMen(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
@@ -127,6 +149,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_NUMBEROFTEACHERS)) {
             profileData.setNumberOfWomen(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfTeacher");
+//            replyToUser.setReplyMarkup(buttonsHandler.getMessageAndButtonStandardRibbon(chatId));
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCHOOLNUMBER);
         }
 
@@ -147,28 +170,40 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ASK_CREDENTIALS)) {
             profileData.setCredentials(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askPhoneNumber");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_URLVK);
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_INDEX);
         }
 
-        if (botState.equals(BotState.ASK_URLVK)) {
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUrlVK");
+        if (botState.equals(BotState.ASK_INDEX)) {
             profileData.setPhoneNumber(usersAnswer);
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_DELIVERYADDRESS);
-            replyToUser.setReplyMarkup(getAnswerForVK());
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askIndex");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CITY);
         }
-
-        if (botState.equals(BotState.ASK_DELIVERYADDRESS)) {
-            profileData.setUrlVK(usersAnswer);
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askDeliveryAddress");
+        if (botState.equals(BotState.ASK_CITY)) {
+            profileData.setIndex(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askCity");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_STREET);
+        }
+        if (botState.equals(BotState.ASK_STREET)) {
+            profileData.setCity(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askStreet");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_HOME);
+        }
+        if (botState.equals(BotState.ASK_HOME)) {
+            profileData.setStreet(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askHome");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_APARTMENT);
+        }
+        if (botState.equals(BotState.ASK_APARTMENT)) {
+            profileData.setHome(usersAnswer);
+            replyToUser = messagesService.getReplyMessage(chatId, "reply.askApartment");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COMMENTSTOORDER);
         }
 
         if (botState.equals(BotState.ASK_COMMENTSTOORDER)) {
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askCommentsToOrder");
-            profileData.setDeliveryAddress(usersAnswer);
+            profileData.setApartment(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ORDER_FILLED);
         }
-
         if (botState.equals(BotState.ORDER_FILLED)) {
             profileData.setCommentsToOrder(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
@@ -179,6 +214,23 @@ public class FillingOrderHandler implements InputMessageHandler {
         userDataCache.saveUserProfileData(userId, profileData);
 
         return replyToUser;
+    }
+
+    public void uploadFile(String file_name, String file_id) throws IOException {
+        URL url = new URL("https://api.telegram.org/bot"+myBot.getBotToken()+"/getFile?file_id="+file_id);
+        BufferedReader in = new BufferedReader(new InputStreamReader( url.openStream()));
+        String res = in.readLine();
+        JSONObject jresult = new JSONObject(res);
+        JSONObject path = jresult.getJSONObject("result");
+        String file_path = path.getString("file_path");
+        URL downoload = new URL("https://api.telegram.org/file/bot" + myBot.getBotToken() + "/" + file_path);
+        FileOutputStream fos = new FileOutputStream("D:/" + file_name);
+        System.out.println("Start upload");
+        ReadableByteChannel rbc = Channels.newChannel(downoload.openStream());
+        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        fos.close();
+        rbc.close();
+        System.out.println("Uploaded!");
     }
 
     private ReplyKeyboard getAnswerForSymbolNumber() {
