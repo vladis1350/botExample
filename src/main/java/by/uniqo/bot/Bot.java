@@ -2,14 +2,19 @@ package by.uniqo.bot;
 
 import by.uniqo.bot.botapi.handlers.TelegramFacade;
 import lombok.SneakyThrows;
+import org.json.JSONObject;
 import org.springframework.util.ResourceUtils;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.Document;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.io.File;
+import java.io.*;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 
 
 public class Bot extends TelegramWebhookBot {
@@ -26,9 +31,7 @@ public class Bot extends TelegramWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        final BotApiMethod<?> replyMessageToUser = telegramFacade.handleUpdate(update);
-
-        return replyMessageToUser;
+        return telegramFacade.handleUpdate(update);
     }
 
     @Override
@@ -45,6 +48,7 @@ public class Bot extends TelegramWebhookBot {
     public String getBotPath() {
         return webHookPath;
     }
+
     public void setWebHookPath(String webHookPath) {
         this.webHookPath = webHookPath;
     }
@@ -72,6 +76,15 @@ public class Bot extends TelegramWebhookBot {
         sendDocument.setChatId(chatId);
         sendDocument.setCaption(caption);
         sendDocument.setDocument(sendFile);
+        execute(sendDocument);
+    }
+
+    @SneakyThrows
+    public void sendDocument2(long chatId, String caption, File doc) {
+        SendDocument sendDocument = new SendDocument();
+        sendDocument.setChatId(chatId);
+        sendDocument.setCaption(caption);
+        sendDocument.setDocument(doc);
         execute(sendDocument);
     }
 }

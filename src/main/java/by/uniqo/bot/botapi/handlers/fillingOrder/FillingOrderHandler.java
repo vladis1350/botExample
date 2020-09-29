@@ -8,6 +8,7 @@ import by.uniqo.bot.cache.UserDataCache;
 import by.uniqo.bot.service.LocaleMessageService;
 import by.uniqo.bot.service.ReplyMessagesService;
 import by.uniqo.bot.utils.Emojis;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         return BotState.FILLING_ORDER;
     }
 
+    @SneakyThrows
     private SendMessage processUsersInput(Message inputMsg) {
         String usersAnswer = inputMsg.getText();
         int userId = inputMsg.getFrom().getId();
@@ -115,19 +117,14 @@ public class FillingOrderHandler implements InputMessageHandler {
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             replyToUser = buttonsHandler.getMessageAndButtonOptionRibbon(userId);
         }
-        if (botState.equals(BotState.ASK_UPLOAD_FILE_LIST_MEN)) {
-            System.out.println(inputMsg);
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUploadListWomen");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_UPLOAD_FILE_LIST_WOMEN);
-        }
+//        if (botState.equals(BotState.ASK_UPLOAD_FILE_LIST_MEN)) {
+//            System.out.println(inputMsg);
+////            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUploadListWomen");
+//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_UPLOAD_FILE_LIST_WOMEN);
+//        }
         if (botState.equals(BotState.ASK_UPLOAD_FILE_LIST_WOMEN)) {
-            System.out.println(inputMsg);
-
-//            try {
-//                uploadFile(inputMsg.getDocument().getFileName(), inputMsg.getDocument().getFileId());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+//            System.out.println("+++++");
+//            uploadFile(inputMsg.getDocument().getFileName(), inputMsg.getDocument().getFileId());
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askUploadListWomen");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
         }
@@ -135,6 +132,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         /**---------------------------------------------------------*/
 
         if (botState.equals(BotState.ASK_NUMBEROFMEN)) {
+            System.out.println("------");
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfMen");
             profileData.setSymbolNumber(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
@@ -233,22 +231,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         return number.matches("^(\\+375)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$");
     }
 
-    public void uploadFile(String file_name, String file_id) throws IOException {
-        URL url = new URL("https://api.telegram.org/bot"+myBot.getBotToken()+"/getFile?file_id="+file_id);
-        BufferedReader in = new BufferedReader(new InputStreamReader( url.openStream()));
-        String res = in.readLine();
-        JSONObject jresult = new JSONObject(res);
-        JSONObject path = jresult.getJSONObject("result");
-        String file_path = path.getString("file_path");
-        URL downoload = new URL("https://api.telegram.org/file/bot" + myBot.getBotToken() + "/" + file_path);
-        FileOutputStream fos = new FileOutputStream("D:/" + file_name);
-        System.out.println("Start upload");
-        ReadableByteChannel rbc = Channels.newChannel(downoload.openStream());
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        fos.close();
-        rbc.close();
-        System.out.println("Uploaded!");
-    }
+
 
     private ReplyKeyboard getAnswerForSymbolNumber() {
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -390,6 +373,23 @@ public class FillingOrderHandler implements InputMessageHandler {
         keyboard.add(row5);
         replyKeyboardMarkup.setKeyboard(keyboard);
         return  replyKeyboardMarkup;
+    }
+
+    public void uploadFile(String file_name, String file_id) throws IOException {
+        URL url = new URL("https://api.telegram.org/bot"+myBot.getBotToken()+"/getFile?file_id="+file_id);
+        BufferedReader in = new BufferedReader(new InputStreamReader( url.openStream()));
+        String res = in.readLine();
+        JSONObject jresult = new JSONObject(res);
+        JSONObject path = jresult.getJSONObject("result");
+        String file_path = path.getString("file_path");
+        URL downoload = new URL("https://api.telegram.org/file/bot" + myBot.getBotToken() + "/" + file_path);
+        FileOutputStream fos = new FileOutputStream("D:/" + file_name);
+        System.out.println("Start upload");
+        ReadableByteChannel rbc = Channels.newChannel(downoload.openStream());
+        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        fos.close();
+        rbc.close();
+        System.out.println("Uploaded!");
     }
 
 }
