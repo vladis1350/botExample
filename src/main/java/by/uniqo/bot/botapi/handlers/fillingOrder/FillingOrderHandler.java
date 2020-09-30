@@ -105,7 +105,6 @@ public class FillingOrderHandler implements InputMessageHandler {
             replyToUser.setReplyMarkup(getButtonsMarkup2());
 
         }
-        /**Выбор именных или неименных лент*/
 
         if (botState.equals(BotState.ASK_OPTION_SYMBOL_LAYOUT)) {
             profileData.setSymbolNumber(usersAnswer);
@@ -113,26 +112,12 @@ public class FillingOrderHandler implements InputMessageHandler {
             replyToUser = buttonsHandler.getMessageAndButtonOptionRibbon(userId);
         }
         if (botState.equals(BotState.ASK_OPTION_RIBBON)) {
-            System.out.println(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFMEN);
             replyToUser = buttonsHandler.getMessageAndButtonOptionRibbon(userId);
         }
-//        if (botState.equals(BotState.ASK_UPLOAD_FILE_LIST_MEN)) {
-//            System.out.println(inputMsg);
-////            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUploadListWomen");
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_UPLOAD_FILE_LIST_WOMEN);
-//        }
-        if (botState.equals(BotState.ASK_UPLOAD_FILE_LIST_WOMEN)) {
-//            System.out.println("+++++");
-//            uploadFile(inputMsg.getDocument().getFileName(), inputMsg.getDocument().getFileId());
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.askUploadListWomen");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFTEACHERS);
-        }
 
-        /**---------------------------------------------------------*/
 
         if (botState.equals(BotState.ASK_NUMBEROFMEN)) {
-            System.out.println("------");
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askNumberOfMen");
             profileData.setSymbolNumber(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NUMBEROFWOMEN);
@@ -151,7 +136,6 @@ public class FillingOrderHandler implements InputMessageHandler {
         }
 
         if (botState.equals(BotState.ASK_TEACHER_STANDARD_RIBBON)) {
-            System.out.println(usersAnswer);
             profileData.setNumberOfTeacher(usersAnswer);
             replyToUser = messagesService.getReplyMessage(chatId, "reply.askStandardRibbon");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SCHOOLNUMBER);
@@ -218,8 +202,7 @@ public class FillingOrderHandler implements InputMessageHandler {
         if (botState.equals(BotState.ORDER_FILLED)) {
             profileData.setCommentsToOrder(usersAnswer);
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
-            replyToUser = messagesService.getReplyMessage(chatId, "reply.OrderFilled");
-            replyToUser.setReplyMarkup(replyKeyboardMarkup);
+            replyToUser = buttonsHandler.getMessageAndButtonSendOrderManager(chatId);
         }
 
         userDataCache.saveUserProfileData(userId, profileData);
@@ -375,21 +358,5 @@ public class FillingOrderHandler implements InputMessageHandler {
         return  replyKeyboardMarkup;
     }
 
-    public void uploadFile(String file_name, String file_id) throws IOException {
-        URL url = new URL("https://api.telegram.org/bot"+myBot.getBotToken()+"/getFile?file_id="+file_id);
-        BufferedReader in = new BufferedReader(new InputStreamReader( url.openStream()));
-        String res = in.readLine();
-        JSONObject jresult = new JSONObject(res);
-        JSONObject path = jresult.getJSONObject("result");
-        String file_path = path.getString("file_path");
-        URL downoload = new URL("https://api.telegram.org/file/bot" + myBot.getBotToken() + "/" + file_path);
-        FileOutputStream fos = new FileOutputStream("D:/" + file_name);
-        System.out.println("Start upload");
-        ReadableByteChannel rbc = Channels.newChannel(downoload.openStream());
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        fos.close();
-        rbc.close();
-        System.out.println("Uploaded!");
-    }
 
 }

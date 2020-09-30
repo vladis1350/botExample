@@ -80,11 +80,12 @@ public class Bot extends TelegramWebhookBot {
     }
 
     @SneakyThrows
-    public void sendDocument2(long chatId, String caption, File doc) {
+    public void sendDocumentToManager(long chatId, String caption, String file_id) {
         SendDocument sendDocument = new SendDocument();
         sendDocument.setChatId(chatId);
         sendDocument.setCaption(caption);
-        sendDocument.setDocument(doc);
+        sendDocument.setDocument(file_id);
         execute(sendDocument);
     }
+
 }

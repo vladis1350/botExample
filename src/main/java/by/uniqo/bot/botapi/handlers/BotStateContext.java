@@ -49,6 +49,7 @@ public class BotStateContext {
             case ASK_LITTLEBELLCOLOR:
             case ASK_BIGBELL:
             case ASK_BIGBELLCOLOR:
+            case ASK_SEND_ORDER_MANAGER:
             case ASK_STARS:
             case ASK_SCROLL:
             case ASK_SCROLLCOLOR:
@@ -70,6 +71,7 @@ public class BotStateContext {
             case ASK_COMMENTSTOORDER:
             case FILLING_ORDER:
             case ORDER_FILLED:
+            case SHOW_MAIN_MENU:
             case ASK_UPLOAD_FILE_LIST_WOMEN:
             case ASK_UPLOAD_FILE_LIST_MEN:
             case ASK_TEACHER_STANDARD_RIBBON:

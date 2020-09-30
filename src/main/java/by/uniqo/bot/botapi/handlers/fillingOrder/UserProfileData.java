@@ -14,6 +14,7 @@ public class UserProfileData {
     String credentials;
     String phoneNumber;
     String urlVK;
+//    String
     String deliveryAddress;
     String commentsToOrder;
     String numberOfTeacher;
@@ -43,6 +44,10 @@ public class UserProfileData {
     String street;
     String home;
     String apartment;
+    String listMenId;
+    String listWomenId;
+    String OrderId;
+    String[] files_id = new String[3];
 
     @Override
     public String toString() {

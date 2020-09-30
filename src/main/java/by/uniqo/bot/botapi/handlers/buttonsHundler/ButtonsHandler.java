@@ -5,6 +5,7 @@ import by.uniqo.bot.service.ReplyMessagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ForceReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -31,6 +32,8 @@ public class ButtonsHandler {
 
     public SendMessage getMessageAndMainMenu(long chatId) {
         String message = messagesService.getReplyText("reply.OrderFilled");
+        ForceReplyKeyboard forceReplyKeyboard = new ForceReplyKeyboard();
+//        forceReplyKeyboard.
         return new SendMessage(chatId, message).setReplyMarkup(getMainMenuKeyboard());
     }
 
@@ -47,6 +50,54 @@ public class ButtonsHandler {
     public SendMessage getMessageAndButtonsSkipComment(long chatId) {
         String message = messagesService.getReplyText("reply.askCommentsToOrder");
         return new SendMessage(chatId, message).setReplyMarkup(getButtonsSkipComment());
+    }
+
+    public SendMessage getMessageAndButtonSendOrderManager(long chatId) {
+        String message = messagesService.getReplyText("reply.OrderFilledMessage");
+        return new SendMessage(chatId, message).setReplyMarkup(getButtonsSendOrderManager());
+    }
+
+    public SendMessage getMessageAndButtonTakeOrder(long chatManagerId) {
+        String message = messagesService.getReplyText("reply.orderMessageFromUser");
+        return new SendMessage(chatManagerId, message).setReplyMarkup(getButtonsDownloadFiles());
+    }
+
+    private InlineKeyboardMarkup getButtonsDownloadFiles() {
+        LocaleMessageService localeMessageService;
+        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+        InlineKeyboardButton downloadFiles = new InlineKeyboardButton().setText(messagesService.getReplyText("btn.takeOrder"));
+
+        //Every button must have callBackData, or else not work !
+        downloadFiles.setCallbackData("downloadFiles");
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(downloadFiles);
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+
+        inlineKeyboardMarkup2.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup2;
+    }
+
+    private InlineKeyboardMarkup getButtonsSendOrderManager() {
+        LocaleMessageService localeMessageService;
+        InlineKeyboardMarkup inlineKeyboardMarkup2 = new InlineKeyboardMarkup();
+        InlineKeyboardButton sendOrderManager = new InlineKeyboardButton().setText(messagesService.getReplyText("reply.sendOrderToManager"));
+
+        //Every button must have callBackData, or else not work !
+        sendOrderManager.setCallbackData("sendOrderManager");
+
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(sendOrderManager);
+
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        rowList.add(keyboardButtonsRow1);
+
+        inlineKeyboardMarkup2.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup2;
     }
 
     private InlineKeyboardMarkup getButtonsSkipComment() {
