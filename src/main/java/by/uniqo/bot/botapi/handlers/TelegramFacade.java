@@ -282,11 +282,12 @@ public class TelegramFacade {
 
         } else if (buttonQuery.getData().equals("sendOrderManager")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
-            myBot.sendDocumentToManager(1331718111, buttonQuery.getFrom().getFirstName() +
+            if (userProfileData.getListMenId() != null && userProfileData.getListWomenId() != null)
+            myBot.sendDocumentToManager(367568142, buttonQuery.getFrom().getFirstName() +
                     buttonQuery.getFrom().getLastName(), userProfileData.getListMenId());
-            myBot.sendDocumentToManager(1331718111, buttonQuery.getFrom().getFirstName() +
+            myBot.sendDocumentToManager(367568142, buttonQuery.getFrom().getFirstName() +
                     buttonQuery.getFrom().getLastName(), userProfileData.getListWomenId());
-            myBot.sendDocument(1331718111, buttonQuery.getFrom().getFirstName() +
+            myBot.sendDocument(367568142, buttonQuery.getFrom().getFirstName() +
                     buttonQuery.getFrom().getLastName(), getUsersProfile(userId));
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
             callBackAnswer = buttonsHandler.getMessageAndMainMenu(chatId);

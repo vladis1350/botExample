@@ -142,11 +142,6 @@ public class FillingOrderHandler implements InputMessageHandler {
             replyToUser.setReplyMarkup(getButtonsStandardRibbon());
         }
 
-//        if (botState.equals(BotState.ASK_SCHOOLNUMBER)) {
-//            profileData.setNumberOfTeacher(usersAnswer);
-//            replyToUser = messagesService.getReplyMessage(chatId, "reply.askSchoolNumber");
-//            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_ADDITIONALSERVICES);
-//        }
 
         if (botState.equals(BotState.ASK_ADDITIONALSERVICES)) {
             myBot.sendPhoto(chatId, messagesService.getReplyMessage("reply.askStart2", Emojis.ARROWDOWN), "static/images/Web-additionalOrder.JPG");
